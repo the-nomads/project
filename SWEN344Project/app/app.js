@@ -17,6 +17,10 @@ angApp.config(['$routeProvider',
                 templateUrl: 'app/components/home/homeView.html',
 				controller: 'HomeController',
                 title: 'Home',
+            }).
+            when('/anotherPage', {
+                templateUrl: 'app/components/anotherPage/anotherPageView.html',
+                title: 'Another Page',
             });
     }
 ]);
