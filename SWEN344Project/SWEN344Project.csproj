@@ -225,8 +225,13 @@
     <Content Include="app\components\anotherPage\anotherPageView.html" />
     <Content Include="app\components\home\homeController.js" />
     <Content Include="app\components\home\homeView.html" />
+    <Content Include="app\components\shared\facebook\facebookLoginController.js" />
+    <Content Include="app\components\shared\facebook\facebookLoginView.html" />
+    <Content Include="app\services\authService.js" />
+    <Content Include="assets\scripts\facebookLogin.js" />
     <Content Include="assets\scripts\lib\angular-route.min.js" />
     <Content Include="assets\scripts\lib\angular.min.js" />
+    <Content Include="assets\scripts\lib\ngFacebook.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />

@@ -29,7 +29,6 @@ namespace SWEN344Project
                             .InstancePerLifetimeScope();
 
 
-            //register dependencies of SFL.Business
             var assembly = typeof(SWEN344Project.Controllers.FinancialTransactionController).Assembly;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
@@ -39,8 +38,6 @@ namespace SWEN344Project
 
             WebApiConfig.Register(config);
 
-            //app.UseAutofacMiddleware(container);
-            //app.UseAutofacWebApi(config);
             app.UseWebApi(config);
         }
 

@@ -8,6 +8,7 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using SWEN344Project.BusinessInterfaces;
+using System.IO;
 
 namespace SWEN344Project.Controllers
 {
@@ -22,6 +23,43 @@ namespace SWEN344Project.Controllers
             this._ftbo = ftbo;
         }
 
+
+        [HttpGet]
+        [Route("get_weather")]
+        public async Task<HttpResponseMessage> getWeather([FromUri]string zip = null)
+        {
+            var response = PerformRequest("http://www.se.rit.edu/~swen-344/activities/rest/RESTAPI-Weather.php?action=get_weather&zip=" + zip);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpGet]
+        [Route("get_weather_list")]
+        public async Task<HttpResponseMessage> getWeatherList()
+        {
+            var response = PerformRequest("http://www.se.rit.edu/~swen-344/activities/rest/RESTAPI-Weather.php?action=get_weather_list");
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpGet]
+        [Route("get_secret_key")]
+        public async Task<HttpResponseMessage> getWeatherKey()
+        {
+            var response = PerformRequest("http://www.se.rit.edu/~swen-344/activities/rest/RESTAPI-Weather.php?action=get_secret_key");
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        private string PerformRequest(string url)
+        {
+            var req = WebRequest.Create(url);
+            var response = req.GetResponse();
+            var dataStream = response.GetResponseStream();
+            var reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return responseFromServer;
+        }
 
         [HttpGet]
         [Route("all")]
