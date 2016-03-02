@@ -1,0 +1,16 @@
+﻿<!doctype html>
+<html lang="en" ng-app="angApp">
+<body class="home">
+    <div id="navbar" ng-controller="FacebookLoginController">
+        <div ng-include src="'app/components/shared/facebook/facebookLoginView.html'"></div>
+    </div>
+    <div class="ng-view" ug></div>
+    <script src="/assets/scripts/lib/angular.min.js"></script>
+    <script src="/assets/scripts/lib/angular-route.min.js"></script>
+    <script src="/assets/scripts/lib/ngFacebook.js"></script>
+    
+    <script src="/app/components/shared/facebook/facebookLoginController.js"></script>
+    <script src="/app/components/home/homeController.js"></script>
+    <script src="/app/app.js"></script>
+</body>
+</html>
