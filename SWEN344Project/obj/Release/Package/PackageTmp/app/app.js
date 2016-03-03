@@ -4,6 +4,9 @@ var angApp = angular.module('angApp', [
     'ngFacebook',
     'HomeController',
     'FacebookLoginController',
+    'WeatherService',
+    'StockService',
+    'CalendarService',
 ]);
 
 

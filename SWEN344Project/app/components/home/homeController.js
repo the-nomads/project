@@ -1,9 +1,11 @@
 ﻿var HomeController = angular.module("HomeController", []);
 
-HomeController.controller('HomeController', ['$scope', function ($scope) {
+HomeController.controller('HomeController',
+    ['$scope', 'WeatherService', 'StockService', 'CalendarService',
+        function ($scope, weatherService, stockService, calendarService) {
     //'use strict';
-	$scope.number = 18;
-	$scope.getNumber = function(num) {
-		return new Array(num);   
-	}
+
+            $scope.temp = weatherService.getWeather().farenheitTemperature;
+            $scope.stocks = stockService.getStockTicker();
+            $scope.calendarData = calendarService.getVisibleDays();
 }]);

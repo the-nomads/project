@@ -227,3 +227,4 @@ C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project\bin\Autofac.xml
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project\bin\Autofac.Integration.WebApi.xml
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project\obj\Debug\SWEN344Project.csprojResolveAssemblyReference.cache
+C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project\bin\index.html

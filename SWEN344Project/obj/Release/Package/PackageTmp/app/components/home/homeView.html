@@ -5,9 +5,21 @@
     <a href="#anotherPage">Another page</a>
 
     <br />
-    <div ng-repeat="i in getNumber(number) track by $index">
-        I can count to {{$index}}
-        <br /><br />
+    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
+        <h3>Weather</h3>
+        Temperature: {{temp}}
+    </div>
+
+    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
+        <h3>Calendar Data</h3>
+        {{calendarData.data}}
+    </div>
+
+    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
+        <h3>Stock Ticker</h3>
+        <div ng-repeat="stock in stocks track by $index">
+            {{stock.symbol}} otherField: {{stock.otherField}}
+        </div>
     </div>
 
 </main>

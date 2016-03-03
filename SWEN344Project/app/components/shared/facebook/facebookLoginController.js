@@ -12,9 +12,9 @@ facebookLoginController.controller('FacebookLoginController', ['$scope', '$windo
         function refresh() {
             $facebook.api("/me").then(
               function (user) {
-                  $scope.welcomeMsg = "Welcome " + user.name;
+                  $scope.userName = user.name;
+                  $scope.facebookUserID = user.id
                   $scope.isLoggedIn = true;
-                  console.log("User");
                   console.log(user);
                   $facebook.api("/" + user.id + "/feed").then(function (userWall) {
                       console.log(userWall);
@@ -23,7 +23,9 @@ facebookLoginController.controller('FacebookLoginController', ['$scope', '$windo
                   });
               },
               function (err) {
-                  $scope.welcomeMsg = "Please log in";
+                  $scope.userName = "";
+                  $scope.facebookUserID = "";
+                  $scope.isLoggedIn = false;
               });
         }
 

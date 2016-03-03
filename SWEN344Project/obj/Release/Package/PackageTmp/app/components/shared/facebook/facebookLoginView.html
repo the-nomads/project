@@ -1,10 +1,24 @@
-﻿<main class="container container-body">
-    <div style="margin: 10px; border: 2px solid blue; padding: 10px; ">
-        <a ng-click="login()">login</a><br />
-        <a ng-click="logout()">logout</a>
-        <div id="status">
-            {{welcomeMsg}}
+﻿<main class="container-body ui inverted masthead segment">
+
+    <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+            <a class="active item">test</a>
+            <a class="item">test 2</a>
+            <div class="right item">
+                <div class="container-body">
+                    <div class="ui inverted button" ng-click="login()" ng-hide="isLoggedIn">Login</div>
+                    <div class="ui inverted button" ng-click="logout()" ng-show="isLoggedIn">Logout</div>
+                </div>
+                <div class="ui image blue label big" ng-show="isLoggedIn">
+                    <img src="https://graph.facebook.com/{{facebookUserID}}/picture?type=small" />
+                    {{userName}}
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div>
+
     </div>
     <div style="margin: 10px; border: 2px solid blue; padding: 10px;">
         <div ng-repeat="post in wall track by $index">
@@ -16,7 +30,7 @@
                 </span>
             </p>
             <p>
-                
+
             </p>
         </div>
     </div>
