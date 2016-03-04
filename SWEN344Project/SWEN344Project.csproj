@@ -222,6 +222,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\components\weather\weatherController.js" />
+    <Content Include="app\components\weather\weatherView.html" />
     <Content Include="app\components\stockSearch\stockSearchController.js" />
     <Content Include="app\components\stockSearch\stockSearchView.html" />
     <Content Include="app\components\calendar\calendarController.js" />

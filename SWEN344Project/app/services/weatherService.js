@@ -38,6 +38,7 @@ weatherService.service('WeatherService', [function () {
                         maxFarenheitTemperature: kelvinToFarenheit(result.main.temp_max),
                         minFarenheitTemperature: kelvinToFarenheit(result.main.temp_min),
                         humidity: result.main.humidity,
+                        // TODO: add more detail
                     };
 
                     callback(weather);

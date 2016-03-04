@@ -21,6 +21,7 @@ var angApp = angular.module('angApp', [
     'FacebookLoginController',
     'CalendarController',
     'StockSearchController',
+    'WeatherController',
 
     'WeatherService',
     'StockService',
@@ -60,6 +61,12 @@ angApp.config(['$routeProvider', '$facebookProvider',
                 controller: 'StockSearchController',
                 title: 'Stock Search',
                 activetab: 'stocksearch'
+            }).
+            when('/weather', {
+                templateUrl: 'app/components/weather/weatherView.html',
+                controller: 'WeatherController',
+                title: 'Weather',
+                activetab: 'weather'
             }).
             otherwise({
                 redirectTo: '/home',
