@@ -2,8 +2,8 @@
 
     <div class="ui container">
         <div class="ui large secondary inverted pointing menu">
-            <a class="active item">test</a>
-            <a class="item">test 2</a>
+            <a class="item" ng-class="{active: $route.current.activetab == 'home'}" href="#home">Home</a>
+            <a class="item" ng-class="{active: $route.current.activetab == 'calendar'}" href="#calendar">Calendar</a>
             <div class="right item">
                 <div class="container-body">
                     <div class="ui inverted button" ng-click="login()" ng-hide="isLoggedIn">Login</div>

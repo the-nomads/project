@@ -26,15 +26,9 @@
     </div>
 
     <div style="border: 2px solid green; margin: 5px; padding: 5px;">
-        <h3>Calendar Data</h3>
-        {{calendarData.data}}
-    </div>
-
-    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
         <h3>Stock Ticker</h3>
         <div ng-repeat="stock in stocks track by $index">
             {{stock.symbol}} otherField: {{stock.otherField}}
         </div>
     </div>
-
 </main>

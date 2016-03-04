@@ -1,7 +1,8 @@
 ﻿var facebookLoginController = angular.module("FacebookLoginController", []);
 
-facebookLoginController.controller('FacebookLoginController', ['$scope', '$window', '$facebook', 'AuthService',
-    function ($scope, $window, $facebook, authService) {
+facebookLoginController.controller('FacebookLoginController', ['$scope', '$window', '$facebook', 'AuthService', '$route',
+    function ($scope, $window, $facebook, authService, $route) {
+        $scope.$route = $route;
 
         $scope.isLoggedIn = false;
         $scope.login = function () { $facebook.login().then(refresh); }

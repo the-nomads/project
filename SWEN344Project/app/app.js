@@ -4,6 +4,7 @@ var angApp = angular.module('angApp', [
     'ngFacebook',
     'HomeController',
     'FacebookLoginController',
+    'CalendarController',
     'WeatherService',
     'StockService',
     'CalendarService',
@@ -26,11 +27,17 @@ angApp.config(['$routeProvider', '$facebookProvider',
             when('/home', {
                 templateUrl: 'app/components/home/homeView.html',
 				controller: 'HomeController',
-                title: 'Home',
+				title: 'Home',
+                activetab: 'home',
             }).
-            when('/anotherPage', {
-                templateUrl: 'app/components/anotherPage/anotherPageView.html',
-                title: 'Another Page',
+            when('/calendar', {
+                templateUrl: 'app/components/calendar/calendarView.html',
+                controller: 'CalendarController',
+                title: 'Calendar',
+                activetab: 'calendar'
+            }).otherwise({
+                redirectTo: '/home',
+                title: 'Home'
             });
     }
 ]);
@@ -51,4 +58,8 @@ angApp.run(['$rootScope', '$window', function ($rootScope, $window) {
 
     // Insert the Facebook JS SDK into the DOM
     firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.$$route.title;
+    });
 }]);

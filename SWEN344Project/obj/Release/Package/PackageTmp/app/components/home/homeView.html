@@ -4,6 +4,21 @@
     <br />
     <a href="#anotherPage">Another page</a>
 
+    <div style="margin: 10px; border: 2px solid blue; padding: 10px;">
+        <div ng-repeat="post in wall track by $index">
+            <h2>{{post.message}}</h2>
+            <p>
+                {{post.story}}
+                <span style="font-style: italic;">
+                    {{ post.created_time | date : 'medium'}}
+                </span>
+            </p>
+            <p>
+
+            </p>
+        </div>
+    </div>
+
     <br />
     <div style="border: 2px solid green; margin: 5px; padding: 5px;">
         <h3>Weather</h3>

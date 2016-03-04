@@ -1,7 +1,7 @@
 ﻿var facebookLoginController = angular.module("FacebookLoginController", []);
 
-facebookLoginController.controller('FacebookLoginController', ['$scope', '$window', '$facebook',
-    function ($scope, $window, $facebook) {
+facebookLoginController.controller('FacebookLoginController', ['$scope', '$window', '$facebook', 'AuthService',
+    function ($scope, $window, $facebook, authService) {
 
         $scope.isLoggedIn = false;
         $scope.login = function () { $facebook.login().then(refresh); }
@@ -16,16 +16,13 @@ facebookLoginController.controller('FacebookLoginController', ['$scope', '$windo
                   $scope.facebookUserID = user.id
                   $scope.isLoggedIn = true;
                   console.log(user);
-                  $facebook.api("/" + user.id + "/feed").then(function (userWall) {
-                      console.log(userWall);
-                      $scope.wall = userWall.data;
-                      //$scope.$apply();
-                  });
+                  authService.setUserLoggedIn(user);
               },
               function (err) {
                   $scope.userName = "";
                   $scope.facebookUserID = "";
                   $scope.isLoggedIn = false;
+                  authService.setUserLoggedOut();
               });
         }
 

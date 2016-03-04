@@ -7,6 +7,7 @@ var angApp = angular.module('angApp', [
     'WeatherService',
     'StockService',
     'CalendarService',
+    'AuthService',
 ]);
 
 
