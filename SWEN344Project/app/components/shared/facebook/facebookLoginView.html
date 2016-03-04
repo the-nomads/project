@@ -20,18 +20,5 @@
     <div>
 
     </div>
-    <div style="margin: 10px; border: 2px solid blue; padding: 10px;">
-        <div ng-repeat="post in wall track by $index">
-            <h2>{{post.message}}</h2>
-            <p>
-                {{post.story}}
-                <span style="font-style: italic;">
-                    {{ post.created_time | date : 'medium'}}
-                </span>
-            </p>
-            <p>
 
-            </p>
-        </div>
-    </div>
 </main>

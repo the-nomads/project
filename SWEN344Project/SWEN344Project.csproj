@@ -227,6 +227,7 @@
     <Content Include="app\components\home\homeView.html" />
     <Content Include="app\components\shared\facebook\facebookLoginController.js" />
     <Content Include="app\components\shared\facebook\facebookLoginView.html" />
+    <Content Include="app\services\authService.js" />
     <Content Include="app\services\calendarService.js" />
     <Content Include="app\services\stockService.js" />
     <Content Include="app\services\weatherService.js" />
