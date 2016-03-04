@@ -19,5 +19,6 @@ HomeController.controller('HomeController',
 
             authService.doOnLogout(function () {
                 $scope.loggedIn = false;
+                $scope.wall = [];
             });
 }]);
