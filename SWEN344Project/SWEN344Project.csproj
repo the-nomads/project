@@ -223,6 +223,8 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\components\anotherPage\anotherPageView.html" />
+    <Content Include="app\components\stockSearch\stockSearchController.js" />
+    <Content Include="app\components\stockSearch\stockSearchView.html" />
     <Content Include="app\components\calendar\calendarController.js" />
     <Content Include="app\components\calendar\calendarView.html" />
     <Content Include="app\components\home\homeController.js" />

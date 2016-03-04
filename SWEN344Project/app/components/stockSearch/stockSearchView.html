@@ -1,0 +1,28 @@
+﻿<main class="container container-body">
+    <div>
+        <h3>
+            TODO:
+        </h3>
+        <ul>
+            You should have a stock page for any ticket symbols that the user may "punch in". Displayed data should include:
+            <li>Current price</li>
+            <li>Day's high</li>
+            <li>Day's low</li>
+            <li>Yearly high</li>
+            <li>Yearly low</li>
+            <li>An interactive chart of the stock (not just a retrieved image)</li>
+        </ul>
+
+        <div>
+            <div class="ui labeled input">
+                <div class="ui label">
+                    Search Stock:
+                </div>
+                <input type="text" placeholder="(e.g. GOOG)" ng-model="currentStockSymbol" ng-enter="stockSearch()">
+            </div>
+            <div class="ui button" ng-click="stockSearch()">
+                Search
+            </div>
+        </div>
+    </div>
+</main>

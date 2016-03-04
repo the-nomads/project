@@ -1,17 +1,23 @@
 ﻿var HomeController = angular.module("HomeController", []);
 
 HomeController.controller('HomeController',
-    ['$scope', 'WeatherService', 'StockService', 'CalendarService', 'AuthService',
-        function ($scope, weatherService, stockService, calendarService, authService) {
+    ['$scope', 'WeatherService', 'StockService', 'AuthService',
+        function ($scope, weatherService, stockService, authService) {
     //'use strict';
 
             $scope.temp = weatherService.getWeather().farenheitTemperature;
             $scope.stocks = stockService.getStockTicker();
-            $scope.calendarData = calendarService.getVisibleDays();
+
+            $scope.loggedIn = false;
 
             authService.doOnLogin(function (user) {
+                $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
                     $scope.wall = userWall.data;
                 });
+            });
+
+            authService.doOnLogout(function () {
+                $scope.loggedIn = false;
             });
 }]);

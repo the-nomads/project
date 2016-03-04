@@ -8,9 +8,17 @@ HomeController.controller('HomeController',
             $scope.temp = weatherService.getWeather().farenheitTemperature;
             $scope.stocks = stockService.getStockTicker();
 
+            $scope.loggedIn = false;
+
             authService.doOnLogin(function (user) {
+                $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
                     $scope.wall = userWall.data;
                 });
+            });
+
+            authService.doOnLogout(function () {
+                $scope.loggedIn = false;
+                $scope.wall = [];
             });
 }]);

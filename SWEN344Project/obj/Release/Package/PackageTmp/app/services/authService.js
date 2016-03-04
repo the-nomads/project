@@ -14,6 +14,10 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
 
     this.setUserLoggedOut = function() {
         this.userLoggedIn = null;
+        for (var i in this.onLogoutQueue) {
+            var call = this.onLogoutQueue[i];
+            call(user);
+        }
     }
 
     this.getUser = function() {
@@ -35,4 +39,13 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
         }
     }
 
+
+    this.onLogoutQueue = [];
+    this.doOnLogout = function (callback) {
+        if (this.userLoggedIn == null) {
+            callback(this.userLoggedIn);
+        } else {
+            this.onLogoutQueue.push(callback);
+        }
+    }
 }]);

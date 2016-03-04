@@ -1,34 +1,48 @@
-﻿<main class="container container-body">
-    THIS IS AN EXAMPLE PAGE<br />
+﻿<main>
+    <div class="ui vertically divided grid">
+        <div class="two column row">
+            <div class="column">
+                <div class="ui segment">
+                    <div ng-show="loggedIn">
+                        <div ng-show="wall.length > 0">
+                            <div ng-repeat="post in wall track by $index">
+                                <h4>{{post.message}}</h4>
+                                <p>
+                                    {{post.story}}
+                                    <span style="font-style: italic;">
+                                        {{ post.created_time | date : 'medium'}}
+                                    </span>
+                                </p>
+                                <p>
 
-    <br />
-    <a href="#anotherPage">Another page</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div ng-hide="wall.length > 0">
+                            Nothing on your Facebook Feed! Perhaps you should make a post!
+                        </div>
+                    </div>
+                    <div ng-hide="loggedIn">
+                        Log in to see your Facebook Feed
+                    </div>
+                </div>
+            </div>
 
-    <div style="margin: 10px; border: 2px solid blue; padding: 10px;">
-        <div ng-repeat="post in wall track by $index">
-            <h2>{{post.message}}</h2>
-            <p>
-                {{post.story}}
-                <span style="font-style: italic;">
-                    {{ post.created_time | date : 'medium'}}
-                </span>
-            </p>
-            <p>
+            <div class="column">
+                <div class="ui segment">
+                    <h3>Weather</h3>
+                    Temperature: {{temp}}
+                </div>
 
-            </p>
-        </div>
-    </div>
-
-    <br />
-    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
-        <h3>Weather</h3>
-        Temperature: {{temp}}
-    </div>
-
-    <div style="border: 2px solid green; margin: 5px; padding: 5px;">
-        <h3>Stock Ticker</h3>
-        <div ng-repeat="stock in stocks track by $index">
-            {{stock.symbol}} otherField: {{stock.otherField}}
+                <div class="ui segment">
+                    <h3>Stock Ticker</h3>
+                    <div ng-repeat="stock in stocks track by $index">
+                        <a href="#stockSearch?stock={{stock.symbol}}">{{stock.symbol}}</a>
+                        <br />
+                        otherField: {{stock.otherField}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

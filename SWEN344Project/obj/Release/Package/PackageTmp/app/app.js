@@ -1,13 +1,33 @@
 ﻿
+angular.module('OnEnterDirective', []).directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter, { 'event': event });
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 var angApp = angular.module('angApp', [
     'ngRoute',
     'ngFacebook',
+
     'HomeController',
     'FacebookLoginController',
+    'CalendarController',
+    'StockSearchController',
+
     'WeatherService',
     'StockService',
     'CalendarService',
     'AuthService',
+
+    'OnEnterDirective',
 ]);
 
 
@@ -26,11 +46,24 @@ angApp.config(['$routeProvider', '$facebookProvider',
             when('/home', {
                 templateUrl: 'app/components/home/homeView.html',
 				controller: 'HomeController',
-                title: 'Home',
+				title: 'Home',
+                activetab: 'home',
             }).
-            when('/anotherPage', {
-                templateUrl: 'app/components/anotherPage/anotherPageView.html',
-                title: 'Another Page',
+            when('/calendar', {
+                templateUrl: 'app/components/calendar/calendarView.html',
+                controller: 'CalendarController',
+                title: 'Calendar',
+                activetab: 'calendar'
+            }).
+            when('/stockSearch', {
+                templateUrl: 'app/components/stockSearch/stockSearchView.html',
+                controller: 'StockSearchController',
+                title: 'Stock Search',
+                activetab: 'stocksearch'
+            }).
+            otherwise({
+                redirectTo: '/home',
+                title: 'Home'
             });
     }
 ]);
@@ -51,4 +84,9 @@ angApp.run(['$rootScope', '$window', function ($rootScope, $window) {
 
     // Insert the Facebook JS SDK into the DOM
     firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.$$route.title;
+    });
 }]);
+

@@ -1,14 +1,33 @@
 ﻿
+angular.module('OnEnterDirective', []).directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter, { 'event': event });
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 var angApp = angular.module('angApp', [
     'ngRoute',
     'ngFacebook',
+
     'HomeController',
     'FacebookLoginController',
     'CalendarController',
+    'StockSearchController',
+
     'WeatherService',
     'StockService',
     'CalendarService',
     'AuthService',
+
+    'OnEnterDirective',
 ]);
 
 
@@ -35,7 +54,14 @@ angApp.config(['$routeProvider', '$facebookProvider',
                 controller: 'CalendarController',
                 title: 'Calendar',
                 activetab: 'calendar'
-            }).otherwise({
+            }).
+            when('/stockSearch', {
+                templateUrl: 'app/components/stockSearch/stockSearchView.html',
+                controller: 'StockSearchController',
+                title: 'Stock Search',
+                activetab: 'stocksearch'
+            }).
+            otherwise({
                 redirectTo: '/home',
                 title: 'Home'
             });
@@ -63,3 +89,4 @@ angApp.run(['$rootScope', '$window', function ($rootScope, $window) {
         $rootScope.title = current.$$route.title;
     });
 }]);
+
