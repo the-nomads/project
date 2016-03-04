@@ -13,20 +13,40 @@ weatherService.service('WeatherService', [function () {
         return this.defaultZip;
     };
 
-    this.getWeather = function (zip) {
+    this.apiID = "fb9769e8739b7889d90188cbb3052c24";
+    this.baseApiURL = "http://api.openweathermap.org/data/2.5/weather";
+
+    this.getWeather = function (zip, callback) {
         if (zip == null) {
             zip == this.getCurrentZipCode();
         }
 
-        // todo: call weather api here and populate weather
+        // http://openweathermap.org/current
 
-        var weather = {
-            zip: zip,
-            celsiusTemperature: 100,
-            farenheitTemperature: 212,
-            humidity: 0.5,
-        };
+        $.ajax({
+            url: this.baseApiURL + "?zip=" + zip + ",us&appid=" + this.apiID,
+            cache: false,
+            crossDomain: true,
+            dataType: 'json',
+            method: 'GET',
+            success: function (result) {
+                if (callback != null) {
 
-        return weather;
+                    var weather = {
+                        zip: zip,
+                        farenheitTemperature: kelvinToFarenheit(result.main.temp),
+                        maxFarenheitTemperature: kelvinToFarenheit(result.main.temp_max),
+                        minFarenheitTemperature: kelvinToFarenheit(result.main.temp_min),
+                        humidity: result.main.humidity,
+                    };
+
+                    callback(weather);
+                }
+            }
+        })
     };
 }]);
+
+kelvinToFarenheit = function(temp) {
+    return parseFloat((((temp * 9) / 5) - 459.67).toFixed(2));
+};

@@ -5,7 +5,8 @@ HomeController.controller('HomeController',
         function ($scope, weatherService, stockService, authService) {
     //'use strict';
 
-            $scope.temp = weatherService.getWeather().farenheitTemperature;
+
+            
             $scope.stocks = stockService.getStockTicker();
 
             $scope.loggedIn = false;
@@ -22,4 +23,31 @@ HomeController.controller('HomeController',
                 $scope.loggedIn = false;
                 $scope.wall = [];
             });
+
+
+            $scope.zipError = false;
+            $scope.currentZipCode = weatherService.getCurrentZipCode();
+
+            $scope.validateZip = function () {
+                var isnum = /^\d+$/.test($scope.currentZipCode);
+                if (!isnum || isNaN(parseInt($scope.currentZipCode, 10)) || $scope.currentZipCode.length != 5) {
+                    return false;
+                }
+                return true;
+            }
+
+            $scope.weatherUpdate = function () {
+                if (!$scope.validateZip()) {
+                    $scope.zipError = true;
+                } else {
+                    $scope.zipError = false;
+
+                    weatherService.getWeather($scope.currentZipCode, function (weather) {
+                        $scope.weather = weather;
+                        $scope.$apply();
+                    });
+                }
+            };
+
+            $scope.weatherUpdate();
 }]);
