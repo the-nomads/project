@@ -31,21 +31,29 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
     }
 
     this.onLoginQueue = [];
-    this.doOnLogin = function(callback) {
+    this.loginCallbackNames = [];
+    this.doOnLogin = function (callbackName, callback) {
         if (this.userLoggedIn != null) {
             callback(this.userLoggedIn);
         }
 
-        this.onLoginQueue.push(callback);
+        if (this.loginCallbackNames.indexOf(callbackName) == -1) {
+            this.onLoginQueue.push(callback);
+            this.loginCallbackNames.push(callbackName);
+        }
     }
 
 
     this.onLogoutQueue = [];
-    this.doOnLogout = function (callback) {
+    this.logoutCallbackNames = [];
+    this.doOnLogout = function (callbackName, callback) {
         if (this.userLoggedIn == null) {
             callback(this.userLoggedIn);
         }
 
-        this.onLogoutQueue.push(callback);
+        if (this.logoutCallbackNames.indexOf(callbackName) == -1) {
+            this.onLogoutQueue.push(callback);
+            this.logoutCallbackNames.push(callbackName);
+        }
     }
 }]);

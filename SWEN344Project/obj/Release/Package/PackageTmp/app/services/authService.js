@@ -16,7 +16,7 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
         this.userLoggedIn = null;
         for (var i in this.onLogoutQueue) {
             var call = this.onLogoutQueue[i];
-            call(user);
+            call();
         }
     }
 
@@ -34,9 +34,9 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
     this.doOnLogin = function(callback) {
         if (this.userLoggedIn != null) {
             callback(this.userLoggedIn);
-        } else {
-            this.onLoginQueue.push(callback);
         }
+
+        this.onLoginQueue.push(callback);
     }
 
 
@@ -44,8 +44,8 @@ authService.service('AuthService', ['$facebook', function ($facebook) {
     this.doOnLogout = function (callback) {
         if (this.userLoggedIn == null) {
             callback(this.userLoggedIn);
-        } else {
-            this.onLogoutQueue.push(callback);
         }
+
+        this.onLogoutQueue.push(callback);
     }
 }]);

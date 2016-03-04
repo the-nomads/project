@@ -10,15 +10,15 @@ HomeController.controller('HomeController',
 
             $scope.loggedIn = false;
 
-            authService.doOnLogin(function (user) {
+            authService.doOnLogin('homeControllerLogin', function (user) {
                 $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
                     $scope.wall = userWall.data;
                 });
             });
 
-            authService.doOnLogout(function () {
-                console.log("Home controller logged out")
+            authService.doOnLogout('homeControllerLogout', function () {
+                
                 $scope.loggedIn = false;
                 $scope.wall = [];
             });

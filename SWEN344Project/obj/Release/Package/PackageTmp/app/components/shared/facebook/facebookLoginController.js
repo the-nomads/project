@@ -6,7 +6,9 @@ facebookLoginController.controller('FacebookLoginController', ['$scope', '$windo
 
         $scope.isLoggedIn = false;
         $scope.login = function () { $facebook.login().then(refresh); }
-        $scope.logout = function () { $facebook.logout().then(refresh); }
+        $scope.logout = function () {
+            $facebook.logout().then(refresh);
+        }
 
         $scope.wall = [];
 
@@ -16,7 +18,6 @@ facebookLoginController.controller('FacebookLoginController', ['$scope', '$windo
                   $scope.userName = user.name;
                   $scope.facebookUserID = user.id
                   $scope.isLoggedIn = true;
-                  console.log(user);
                   authService.setUserLoggedIn(user);
               },
               function (err) {

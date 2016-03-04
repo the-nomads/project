@@ -18,6 +18,7 @@ HomeController.controller('HomeController',
             });
 
             authService.doOnLogout(function () {
+                console.log("Home controller logged out")
                 $scope.loggedIn = false;
                 $scope.wall = [];
             });
