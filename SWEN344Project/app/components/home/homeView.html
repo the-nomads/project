@@ -1,7 +1,7 @@
 ﻿<main>
     <div class="ui vertically divided grid">
         <div class="two column row">
-            <div class="column">
+            <div class="ten wide column">
                 <div class="ui segment">
                     <div ng-show="loggedIn">
                         <div ng-show="wall.length > 0">
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="column">
+            <div class="six wide column">
                 <div class="ui segment">
                     <div>
                         <div class="ui labeled input">
@@ -49,21 +49,33 @@
                             </ul>
                         </div>
                     </div>
-                    <h3>Weather For <a href="#/weather?weatherZip={{weather.zip}}" title="Weather Details">{{weather.zip}}</a></h3>
-                    <div>
-                        Temperature: {{weather.farenheitTemperature}}°
+                    <div ng-hide="weather.errorLoading">
+                        <br />
+                        <h3>Weather For <a href="#/weather?weatherZip={{weather.zip}}" title="Weather Details">{{weather.zip}}</a></h3>
+                        <div class="ui button" ng-click="saveZip()">
+                            Save As Home Location
+                        </div>
+                        <br /><br />
+                        <div>
+                            Temperature: {{weather.farenheitTemperature}}°
+                        </div>
+                        <div>
+                            High: {{weather.maxFarenheitTemperature}}°
+                        </div>
+                        <div>
+                            Low: {{weather.minFarenheitTemperature}}°
+                        </div>
+                        <div>
+                            Humidity: {{weather.humidity}}%
+                        </div>
+                        <div>
+                            <small>Temperatures displayed in Farenheit</small>
+                        </div>
                     </div>
-                    <div>
-                        High: {{weather.maxFarenheitTemperature}}°
-                    </div>
-                    <div>
-                        Low: {{weather.minFarenheitTemperature}}°
-                    </div>
-                    <div>
-                        Humidity: {{weather.humidity}}%
-                    </div>
-                    <div>
-                        <small>Temperatures displayed in Farenheit</small>
+                    <div ng-show="weather.errorLoading">
+                        <div class="ui error message">
+                            There was an error loading the weather. Please try again later.
+                        </div>
                     </div>
                 </div>
 

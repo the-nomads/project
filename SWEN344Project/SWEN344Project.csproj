@@ -249,6 +249,7 @@
     <Content Include="assets\scripts\lib\gcal.js" />
     <Content Include="assets\scripts\lib\jquery-2.2.1.min.js" />
     <Content Include="assets\scripts\lib\jquery-dateFormat.min.js" />
+    <Content Include="assets\scripts\lib\js.cookie.js" />
     <Content Include="assets\scripts\lib\moment.min.js" />
     <Content Include="assets\scripts\lib\ngFacebook.js" />
     <Content Include="assets\scripts\lib\semantic.min.js" />

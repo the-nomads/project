@@ -34,4 +34,9 @@ WeatherController.controller('WeatherController',
             };
 
             $scope.weatherUpdate();
+
+
+            $scope.saveZip = function () {
+                weatherService.setUserDefaultZipCode($scope.currentZipCode);
+            };
 }]);
