@@ -130,7 +130,7 @@ weatherCallbackHelper = function (zip, daily, forecast, callback) {
         for (var i in forecast.list) {
             var hourlyData = forecast.list[i];
             var formatted = parseWeatherData(hourlyData);
-            formatted.time = new Date(hourlyData.dt_txt);
+            formatted.time = new Date(hourlyData.dt_txt + " UTC");
             weather.hourly.push(formatted);
         }
     }
