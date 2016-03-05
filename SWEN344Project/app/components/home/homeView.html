@@ -65,8 +65,9 @@
                     <h3>Stock Ticker</h3>
                     <div ng-repeat="stock in stocks track by $index">
                         <a href="#stockSearch?stock={{stock.symbol}}">{{stock.symbol}}</a>
-                        <br />
-                        otherField: {{stock.otherField}}
+                        <span>
+                            {{stock.BookValue}} ({{stock.Change}})
+                        </span>
                     </div>
                 </div>
             </div>

@@ -5,24 +5,26 @@ HomeController.controller('HomeController',
         function ($scope, weatherService, stockService, authService) {
     //'use strict';
 
-
+            $scope.stocks = [];
             
-            $scope.stocks = stockService.getStockTicker();
+            stockService.getStockTicker(function (stocks) {
+                $scope.stocks = stocks;
+                $scope.$apply();
+            });
 
             $scope.loggedIn = false;
-
             authService.doOnLogin('homeControllerLogin', function (user) {
                 $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
                     $scope.wall = userWall.data;
                 });
             });
-
             authService.doOnLogout('homeControllerLogout', function () {
                 
                 $scope.loggedIn = false;
                 $scope.wall = [];
             });
+
 
 
             $scope.zipError = false;

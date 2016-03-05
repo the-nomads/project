@@ -29,6 +29,7 @@ var angApp = angular.module('angApp', [
     'AuthService',
 
     'OnEnterDirective',
+    'chart.js',
 ]);
 
 

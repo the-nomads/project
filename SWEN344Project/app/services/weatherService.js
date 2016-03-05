@@ -44,7 +44,7 @@ weatherService.service('WeatherService', [function () {
                     callback(weather);
                 }
             }
-        })
+        });
     };
 }]);
 
