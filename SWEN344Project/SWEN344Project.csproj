@@ -246,6 +246,7 @@
     <Content Include="assets\scripts\lib\angular.min.js" />
     <Content Include="assets\scripts\lib\Chart.min.js" />
     <Content Include="assets\scripts\lib\fullcalendar.min.js" />
+    <Content Include="assets\scripts\lib\gcal.js" />
     <Content Include="assets\scripts\lib\jquery-2.2.1.min.js" />
     <Content Include="assets\scripts\lib\jquery-dateFormat.min.js" />
     <Content Include="assets\scripts\lib\moment.min.js" />

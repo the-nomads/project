@@ -16,9 +16,11 @@ HomeController.controller('HomeController',
             authService.doOnLogin('homeControllerLogin', function (user) {
                 $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
+                    console.log(userWall.data);
                     $scope.wall = userWall.data;
                 });
             });
+
             authService.doOnLogout('homeControllerLogout', function () {
                 
                 $scope.loggedIn = false;

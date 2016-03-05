@@ -20,6 +20,7 @@ HomeController.controller('HomeController',
                     $scope.wall = userWall.data;
                 });
             });
+
             authService.doOnLogout('homeControllerLogout', function () {
                 
                 $scope.loggedIn = false;
