@@ -9,17 +9,17 @@ stockService.service('StockService', [function () {
     this.urlAppendDetail = "&format=json&env=http://datatables.org/alltables.env";
     this.urlAppendTimeline = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
-    this.getStockTicker = function (callback) {
-        this.getStockDetailsMany(this.defaultStocks, callback)
+    this.getStockTicker = function (callback, onError) {
+        this.getStockDetailsMany(this.defaultStocks, callback, onError)
     };
 
-    this.getStockDetails = function (stockSymbol, callback) {
+    this.getStockDetails = function (stockSymbol, callback, onError) {
         var arr = [];
         arr.push(stockSymbol);
-        this.getStockDetailsMany(arr, callback);
+        this.getStockDetailsMany(arr, callback, onError);
     };
 
-    this.getStockDetailsMany = function (symbols, callback) {
+    this.getStockDetailsMany = function (symbols, callback, onError) {
         var query = "select * from yahoo.finance.quotes where symbol in ("
 
         for (var i in symbols) {
@@ -36,10 +36,10 @@ stockService.service('StockService', [function () {
             } else {
                 callback(data.query.results.quote);
             }
-        });
+        }, onError);
     }
 
-    this.getStockTimeline = function (symbol, startDate, endDate, callback) {
+    this.getStockTimeline = function (symbol, startDate, endDate, callback, onError) {
 
         if (endDate > startDate) {
             var swap = endDate;
@@ -57,10 +57,10 @@ stockService.service('StockService', [function () {
             } else {
                 callback(data.query.results.quote);
             }
-        });
+        }, onError);
     }
 
-    this.executeQuery = function (query, isDetail, callback) {
+    this.executeQuery = function (query, isDetail, callback, onError) {
         $.ajax({
             url: this.baseUrl + "?q=" + encodeURIComponent(query) + (isDetail ? this.urlAppendDetail : this.urlAppendTimeline),
             cache: false,
@@ -70,6 +70,11 @@ stockService.service('StockService', [function () {
             success: function (result) {
                 if (callback != null) {
                     callback(result);
+                }
+            },
+            error: function () {
+                if (onError != null) {
+                    onError();
                 }
             }
         });

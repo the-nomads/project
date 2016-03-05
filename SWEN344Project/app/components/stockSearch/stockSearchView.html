@@ -118,7 +118,8 @@
                             </div>
                         </div>
                         <div class="ui segment">
-                            <div ng-show="anyChartData">
+                            <!-- show if there's chart data and the error is null -->
+                            <div ng-show="anyChartData && chartError == null">
                                 <div class="ui dimmer" ng-class="{active: chartLoading}">
                                     <div class="ui loader"></div>
                                 </div>
@@ -127,11 +128,17 @@
                                         chart-options="chartOptions"
                                         chart-click="onClick"></canvas>
                             </div>
-                            <div ng-hide="anyChartData">
-                                <div class="ui error message">
+                            <!-- hide if there's chart data and the error is null -->
+                            <div ng-hide="anyChartData && chartError == null">
+                                <!-- If there's no chartError show this-->
+                                <div class="ui error message" ng-show="chartError == null">
                                     No data could be found. Please try selecting a different date range.
                                     <br />
                                     Note that we may not be able to find records for more than 2 years in the past.
+                                </div>
+                                <!-- If there is a chartError show it-->
+                                <div class="ui error message" ng-show="chartError != null">
+                                    {{chartError}}
                                 </div>
                             </div>
                         </div>

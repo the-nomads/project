@@ -47,6 +47,9 @@ StockSearchController.controller('StockSearchController',
                         }
 
                         $scope.$apply();
+                    }, function () {
+                        $scope.stockSymbolError = 'There was an error loading the stock data for the stock "' + $scope.currentStockSymbol + '". Please try again later.';
+                        $scope.$apply();
                     });
                 }
             }
@@ -55,7 +58,7 @@ StockSearchController.controller('StockSearchController',
 
             $scope.chartOptions = {
                 datasetFill: false,
-                pointHitDetectionRadius: 0,
+                pointHitDetectionRadius: 7,
             };
 
             // Workaround for bug where chart doesn't clear old data
@@ -106,6 +109,7 @@ StockSearchController.controller('StockSearchController',
             $scope.anyChartData = false;
 
             $scope.reloadChart = function () {
+                $scope.chartError = null;
                 $scope.chartLoading = true;
                 $scope.anyChartData = true;
 
@@ -192,8 +196,14 @@ StockSearchController.controller('StockSearchController',
                     $scope.labels = labels;
                     $scope.chartLoading = false;
                     $scope.$apply();
+                }, function () {
+                    $scope.chartError = "There was an error loading the stock data. Please try again later.";
+                    $scope.chartLoading = false;
+                    $scope.$apply();
                 });
             };
+
+            $scope.chartError = null;
 
             // this means that the there was a stock in the location's querystring
             // so automatically do the search

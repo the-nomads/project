@@ -1,27 +1,142 @@
 ﻿<main class="container container-body">
-    <div>
-        <h3>
-            TODO:
-        </h3>
-        <ul>
-            You should have a stock page for any ticket symbols that the user may "punch in". Displayed data should include:
-            <li>Current price</li>
-            <li>Day's high</li>
-            <li>Day's low</li>
-            <li>Yearly high</li>
-            <li>Yearly low</li>
-            <li>An interactive chart of the stock (not just a retrieved image)</li>
-        </ul>
-
-        <div>
-            <div class="ui labeled input">
-                <div class="ui label">
-                    Search Stock:
+    <div class="ui">
+        <div class="ui segment items">
+            <div class="ui item">
+                <div class="ui labeled input">
+                    <div class="ui label">
+                        Search Stock:
+                    </div>
+                    <input type="text" placeholder="(e.g. GOOG)" ng-model="currentStockSymbol" ng-enter="stockSearch()">
                 </div>
-                <input type="text" placeholder="(e.g. GOOG)" ng-model="currentStockSymbol" ng-enter="stockSearch()">
+                <div class="ui button" ng-click="stockSearch()">
+                    Search
+                </div>
             </div>
-            <div class="ui button" ng-click="stockSearch()">
-                Search
+            <div ng-show="stockSymbolError != null" class="ui item">
+                <div class="ui error message">
+                    {{stockSymbolError}}
+                </div>
+            </div>
+        </div>
+        <div ng-show="stockDetails != null" class="ui vertically divided grid">
+            <div class="two column row">
+                <div class="column four wide">
+                    <div class="ui segments segment">
+                        <div class="ui segment">
+                            <h1>{{stockDetails.symbol}}</h1>
+                        </div>
+                        <div class="ui segment">
+                            <table class="ui celled padded table">
+                                <tbody>
+                                    <tr>
+                                        <td>Current:</td>
+                                        <td>
+                                            {{stockDetails.BookValue}} <span>({{stockDetails.Change}})</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Volume</td>
+                                        <td>{{stockDetails.Volume}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><h3>Daily:</h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td>High:</td>
+                                        <td>{{stockDetails.DaysHigh}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Low:</td>
+                                        <td>{{stockDetails.DaysLow}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><h3>Yearly:</h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td>High:</td>
+                                        <td>{{stockDetails.YearHigh}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Low:</td>
+                                        <td>{{stockDetails.YearLow}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="column twelve wide">
+
+                    <div class="ui segments segment">
+                        <div class="ui segment items">
+                            <div class="item">
+                                <h1>History</h1>
+                            </div>
+                            <div class="item">
+                                <div class="ui three column middle aligned very relaxed stackable grid">
+                                    <div class="row">
+                                        <div class="column">
+                                            <div class="ui button" ng-click="setCalendarToYear()">
+                                                Past Year
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="ui button" ng-click="setCalendarToMonth()">
+                                                Past Month
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="ui button" ng-click="setCalendarToWeek()">
+                                                Past Week
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="column">
+                                            <div class="ui labeled input">
+                                                <div class="ui label">
+                                                    Begin:
+                                                </div>
+                                                <input type="text" placeholder="(e.g. 2006-01-10)" ng-model="beginDate" ng-enter="reloadChart()">
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="ui labeled input">
+                                                <div class="ui label">
+                                                    End:
+                                                </div>
+                                                <input type="text" placeholder="(e.g. 2006-01-10)" ng-model="endDate" ng-enter="reloadChart()">
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="ui button" ng-click="reloadChart()">
+                                                Reload Calendar
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui segment">
+                            <div ng-show="anyChartData">
+                                <div class="ui dimmer" ng-class="{active: chartLoading}">
+                                    <div class="ui loader"></div>
+                                </div>
+                                <canvas id="line" class="chart chart-line" chart-data="data"
+                                        chart-labels="labels" chart-legend="true" chart-series="series"
+                                        chart-options="chartOptions"
+                                        chart-click="onClick"></canvas>
+                            </div>
+                            <div ng-hide="anyChartData">
+                                <div class="ui error message">
+                                    No data could be found. Please try selecting a different date range.
+                                    <br />
+                                    Note that we may not be able to find records for more than 2 years in the past.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

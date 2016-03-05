@@ -5,17 +5,23 @@
                 <div class="ui segment">
                     <div ng-show="loggedIn">
                         <div ng-show="wall.length > 0">
-                            <div ng-repeat="post in wall track by $index">
-                                <h4>{{post.message}}</h4>
-                                <p>
-                                    {{post.story}}
-                                    <span style="font-style: italic;">
-                                        {{ post.created_time | date : 'medium'}}
-                                    </span>
-                                </p>
-                                <p>
-
-                                </p>
+                            <div class="ui feed">
+                                <div class="event" ng-show="post.message != null || post.story != null" ng-repeat="post in wall track by $index">
+                                    <div class="content">
+                                        <div class="summary">
+                                            <span>
+                                                {{post.story}}
+                                            </span>
+                                            <div class="date">
+                                                {{ post.created_time | date : 'medium'}}
+                                            </div>
+                                        </div>
+                                        <div class="extra text">
+                                            {{post.message}}
+                                        </div>
+                                        <div class="ui clearing divider"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div ng-hide="wall.length > 0">

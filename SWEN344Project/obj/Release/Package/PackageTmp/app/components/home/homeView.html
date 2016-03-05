@@ -43,7 +43,7 @@
                             </ul>
                         </div>
                     </div>
-                    <h3>Weather For {{weather.zip}}</h3>
+                    <h3>Weather For <a href="#/weather?weatherZip={{weather.zip}}" title="Weather Details">{{weather.zip}}</a></h3>
                     <div>
                         Temperature: {{weather.farenheitTemperature}}°
                     </div>
@@ -65,8 +65,9 @@
                     <h3>Stock Ticker</h3>
                     <div ng-repeat="stock in stocks track by $index">
                         <a href="#stockSearch?stock={{stock.symbol}}">{{stock.symbol}}</a>
-                        <br />
-                        otherField: {{stock.otherField}}
+                        <span>
+                            {{stock.BookValue}} ({{stock.Change}})
+                        </span>
                     </div>
                 </div>
             </div>
