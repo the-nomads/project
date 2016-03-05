@@ -78,7 +78,7 @@ weatherService.service('WeatherService', [function () {
         } else {
 
             $.ajax({
-                url: this.baseApiURL + "forecast?zip=" + zip + ",us&appid=" + this.apiID + "&cnt=5",
+                url: this.baseApiURL + "forecast?zip=" + zip + ",us&appid=" + this.apiID + "&cnt=12", // count 12 because it's in 3 hour increments, so 36 hours
                 cache: false,
                 crossDomain: true,
                 dataType: 'json',
