@@ -5,22 +5,53 @@ StockSearchController.controller('StockSearchController',
         function ($scope, stockService, authService, $location) {
             //'use strict';
 
-            $scope.chartLoading = false;
-
+            $scope.stockSymbolError = null;
             $scope.currentStockSymbol = $location.search().stock;
             $scope.stockDetails = null;
 
             $scope.stockSearch = function () {
                 if ($scope.currentStockSymbol == null || $scope.currentStockSymbol == "") {
-                    // TODO: friendly warning
-                    alert("Please enter a Stock Symbol to look up");
+                    $scope.stockSymbolError = "Please enter a Stock Symbol to look up";
                 } else {
+                    
+                    $scope.currentStockSymbol = $scope.currentStockSymbol.toUpperCase();
                     stockService.getStockDetails($scope.currentStockSymbol, function (data) {
-                        $scope.stockDetails = data;
+                        // Yahoo will send us an object with all null fields
+                        // if the stock symbol doesn't exist
+                        var AnyNotNull = false;
+                        if (data != null) {
+                            for (var key in data) {
+                                var value = data[key];
+                                if (value != null) {
+                                    if (value.toUpperCase) {
+                                        var toUpper = value.toUpperCase();
+                                        if (toUpper != $scope.currentStockSymbol.toUpperCase()) {
+                                            AnyNotNull = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (AnyNotNull) {
+                            $scope.stockDetails = data;
+                            $scope.stockSymbolError = null;
+                            if (dateRangeSet) {
+                                $scope.reloadChart();
+                            } else {
+                                $scope.setCalendarToMonth();
+                            }
+                        } else {
+                            $scope.stockDetails = null;
+                            $scope.stockSymbolError = 'No data could be found for the stock "' + $scope.currentStockSymbol + '".';
+                        }
+
                         $scope.$apply();
                     });
                 }
             }
+
+            $scope.chartLoading = false;
 
             $scope.chartOptions = {
                 datasetFill: false,
@@ -37,43 +68,61 @@ StockSearchController.controller('StockSearchController',
                 $chart = chart;
             });
 
+            var dateRangeSet = false;
 
             $scope.setCalendarToYear = function () {
+                dateRangeSet = true;
                 var now = new Date();
                 var yearInPast = new Date();
                 yearInPast.setTime(yearInPast.getTime() + (-366) * 86400000); // subtract 366 days (so we include 365 days)
 
                 $scope.beginDate = $.format.date(yearInPast, 'yyyy-MM-dd');
                 $scope.endDate = $.format.date(now, 'yyyy-MM-dd');
-                $scope.reloadCalendar();
+                $scope.reloadChart();
             };
 
             $scope.setCalendarToMonth = function () {
+                dateRangeSet = true;
                 var now = new Date();
                 var monthInPast = new Date();
                 monthInPast.setTime(monthInPast.getTime() + (-32) * 86400000); // subtract 32 days (so we include 31 days)
 
                 $scope.beginDate = $.format.date(monthInPast, 'yyyy-MM-dd');
                 $scope.endDate = $.format.date(now, 'yyyy-MM-dd');
-                $scope.reloadCalendar();
+                $scope.reloadChart();
             };
 
             $scope.setCalendarToWeek = function () {
+                dateRangeSet = true;
                 var now = new Date();
                 var weekInPast = new Date();
                 weekInPast.setTime(weekInPast.getTime() + (-7) * 86400000); // subtract 8 days (so we include 7 days)
 
                 $scope.beginDate = $.format.date(weekInPast, 'yyyy-MM-dd');
                 $scope.endDate = $.format.date(now, 'yyyy-MM-dd');
-                $scope.reloadCalendar();
+                $scope.reloadChart();
             };
 
-            $scope.reloadCalendar = function () {
+            $scope.anyChartData = false;
+
+            $scope.reloadChart = function () {
                 $scope.chartLoading = true;
+                $scope.anyChartData = true;
+
                 var beginDateParsed = new Date($scope.beginDate);
                 var endDateParsed = new Date($scope.endDate);
 
                 stockService.getStockTimeline($scope.currentStockSymbol, beginDateParsed, endDateParsed, function (data) {
+
+                    if (data == null) {
+                        $scope.anyChartData = false;
+                        $scope.chartLoading = false;
+                        $scope.$apply();
+                        return;
+                    }
+
+                    $scope.anyChartData = true;
+
                     $scope.series = ['Open', 'Close', 'High', 'Low'];
                     var labels = [];
                     var dataLow = [];
@@ -146,11 +195,10 @@ StockSearchController.controller('StockSearchController',
                 });
             };
 
-            $scope.setCalendarToMonth();
-
             // this means that the there was a stock in the location's querystring
             // so automatically do the search
             if ($scope.currentStockSymbol != null) {
                 $scope.stockSearch();
+                $scope.setCalendarToMonth();
             }
         }]);

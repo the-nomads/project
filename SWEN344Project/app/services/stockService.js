@@ -31,7 +31,11 @@ stockService.service('StockService', [function () {
 
         query += ")";
         this.executeQuery(query, true, function (data) {
-            callback(data.query.results.quote);
+            if (data == null || data.query == null || data.query.results == null || data.query.results.quote == null) {
+                callback(null);
+            } else {
+                callback(data.query.results.quote);
+            }
         });
     }
 
@@ -43,13 +47,16 @@ stockService.service('StockService', [function () {
             startDate = swap;
         }
 
-        //startDate%20%3D%20%222009-09-11%22%20and%20endDate%20%3D%20%222010-03-10%22
         var query = 'select * from yahoo.finance.historicaldata where symbol = "' + symbol 
             + '" and startDate = "' + $.format.date(endDate, 'yyyy-MM-dd') + 
             '" and endDate = "' + $.format.date(startDate, 'yyyy-MM-dd') + '"';
 
         this.executeQuery(query, false, function (data) {
-            callback(data.query.results.quote);
+            if (data == null || data.query == null || data.query.results == null || data.query.results.quote == null) {
+                callback(null); // callback with null
+            } else {
+                callback(data.query.results.quote);
+            }
         });
     }
 
