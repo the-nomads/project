@@ -23,15 +23,37 @@
                 <div class="column four wide">
                     <div class="ui segments segment">
                         <div class="ui segment">
-                            <h1>{{stockDetails.symbol}}</h1>
+                            <h1>
+                                <span ng-show="stockDetails.Name != null">
+                                    {{stockDetails.Name}}
+                                    <span ng-show="stockDetails.symbol != null">
+                                        ({{stockDetails.symbol}})
+                                    </span>
+                                </span>
+                                <span ng-show="stockDetails.Name == null">
+                                    {{stockDetails.symbol}}
+                                </span>
+                            </h1>
                         </div>
                         <div class="ui segment">
                             <table class="ui celled padded table">
                                 <tbody>
                                     <tr>
-                                        <td>Current:</td>
+                                        <td>Current Bid:</td>
                                         <td>
-                                            {{stockDetails.BookValue}} <span>({{stockDetails.Change}})</span>
+                                            {{stockDetails.Bid}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Ask:</td>
+                                        <td>
+                                            {{stockDetails.Ask}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Change:</td>
+                                        <td>
+                                            {{stockDetails.Change}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -134,7 +156,7 @@
                                 <div class="ui error message" ng-show="chartError == null">
                                     No data could be found. Please try selecting a different date range.
                                     <br />
-                                    Note that we may not be able to find records for more than 2 years in the past.
+                                    Note that we may not be able to load records for more than 2 years at a time.
                                 </div>
                                 <!-- If there is a chartError show it-->
                                 <div class="ui error message" ng-show="chartError != null">
