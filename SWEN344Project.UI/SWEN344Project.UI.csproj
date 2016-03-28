@@ -91,6 +91,7 @@
     <Content Include="app\components\stockSearch\stockSearchView.html" />
     <Content Include="app\components\weather\weatherController.js" />
     <Content Include="app\components\weather\weatherView.html" />
+    <Content Include="app\services\caveWallAPIService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\calendarService.js" />
     <Content Include="app\services\stockService.js" />

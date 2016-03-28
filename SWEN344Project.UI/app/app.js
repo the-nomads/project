@@ -27,6 +27,7 @@ var angApp = angular.module('angApp', [
     'StockService',
     'CalendarService',
     'AuthService',
+    'CaveWallAPIService',
 
     'OnEnterDirective',
     'chart.js',

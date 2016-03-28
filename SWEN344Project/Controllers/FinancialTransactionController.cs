@@ -13,7 +13,7 @@ using System.IO;
 namespace SWEN344Project.Controllers
 {
     [RoutePrefix("financialtransactions")]
-    public class FinancialTransactionController : ApiController
+    public class FinancialTransactionController : BaseAPIController
     {
         private readonly IFinancialTransactionBusinessObject _ftbo;
         public FinancialTransactionController(
@@ -25,16 +25,9 @@ namespace SWEN344Project.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<HttpResponseMessage> GetAllTransactions([FromUri]string messageOptional = null)
+        public async Task<HttpResponseMessage> GetAllTransactions()
         {
-            if (string.IsNullOrEmpty(messageOptional))
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, "Add ?messageOptional= to your URL or /num for an ID");
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, "message was " + messageOptional);
-            }
+            return this.CreateOKResponse(new { a = 1, b = 2 });
         }
 
         [HttpGet]
