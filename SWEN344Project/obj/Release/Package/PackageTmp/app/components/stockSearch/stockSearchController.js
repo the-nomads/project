@@ -14,7 +14,10 @@ StockSearchController.controller('StockSearchController',
                     $scope.stockSymbolError = "Please enter a Stock Symbol to look up";
                 } else {
                     
-                    $scope.currentStockSymbol = $scope.currentStockSymbol.toUpperCase();
+                    $scope.currentStockSymbol =
+                        $scope.currentStockSymbol
+                        .toUpperCase()
+                        .replace(".", ""); // remove "." from punctuation
                     stockService.getStockDetails($scope.currentStockSymbol, function (data) {
                         // Yahoo will send us an object with all null fields
                         // if the stock symbol doesn't exist

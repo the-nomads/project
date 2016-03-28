@@ -221,39 +221,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
-    <Content Include="app\components\weather\weatherController.js" />
-    <Content Include="app\components\weather\weatherView.html" />
-    <Content Include="app\components\stockSearch\stockSearchController.js" />
-    <Content Include="app\components\stockSearch\stockSearchView.html" />
-    <Content Include="app\components\calendar\calendarController.js" />
-    <Content Include="app\components\calendar\calendarView.html" />
-    <Content Include="app\components\home\homeController.js" />
-    <Content Include="app\components\home\homeView.html" />
-    <Content Include="app\components\shared\facebook\facebookLoginController.js" />
-    <Content Include="app\components\shared\facebook\facebookLoginView.html" />
-    <Content Include="app\services\authService.js" />
-    <Content Include="app\services\calendarService.js" />
-    <Content Include="app\services\stockService.js" />
-    <Content Include="app\services\weatherService.js" />
-    <Content Include="assets\css\lib\angular-chart.min.css" />
-    <Content Include="assets\css\lib\fullcalendar.min.css" />
-    <Content Include="assets\css\lib\fullcalendar.print.css" />
-    <Content Include="assets\css\lib\semantic.min.css" />
-    <Content Include="assets\scripts\facebookLogin.js" />
-    <Content Include="assets\scripts\lib\angular-chart.min.js" />
-    <Content Include="assets\scripts\lib\angular-route.min.js" />
-    <Content Include="assets\scripts\lib\angular.min.js" />
-    <Content Include="assets\scripts\lib\Chart.min.js" />
-    <Content Include="assets\scripts\lib\fullcalendar.min.js" />
-    <Content Include="assets\scripts\lib\gcal.js" />
-    <Content Include="assets\scripts\lib\jquery-2.2.1.min.js" />
-    <Content Include="assets\scripts\lib\jquery-dateFormat.min.js" />
-    <Content Include="assets\scripts\lib\js.cookie.js" />
-    <Content Include="assets\scripts\lib\moment.min.js" />
-    <Content Include="assets\scripts\lib\ngFacebook.js" />
-    <Content Include="assets\scripts\lib\semantic.min.js" />
-    <Content Include="assets\css\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -272,9 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\NomadTest.pubxml">
       <SubType>Designer</SubType>
     </None>

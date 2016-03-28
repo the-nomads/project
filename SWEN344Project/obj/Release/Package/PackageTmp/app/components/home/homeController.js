@@ -3,10 +3,10 @@
 HomeController.controller('HomeController',
     ['$scope', 'WeatherService', 'StockService', 'AuthService',
         function ($scope, weatherService, stockService, authService) {
-    //'use strict';
+            //'use strict';
 
             $scope.stocks = [];
-            
+
             stockService.getStockTicker(function (stocks) {
                 $scope.stocks = stocks;
                 $scope.$apply();
@@ -16,13 +16,11 @@ HomeController.controller('HomeController',
             authService.doOnLogin('homeControllerLogin', function (user) {
                 $scope.loggedIn = true;
                 authService.getUserFeed(function (userWall) {
-                    console.log(userWall.data);
                     $scope.wall = userWall.data;
                 });
             });
 
             authService.doOnLogout('homeControllerLogout', function () {
-                
                 $scope.loggedIn = false;
                 $scope.wall = [];
             });
@@ -53,5 +51,10 @@ HomeController.controller('HomeController',
                 }
             };
 
+            $scope.saveZip = function () {
+                weatherService.setUserDefaultZipCode($scope.currentZipCode);
+            };
+
             $scope.weatherUpdate();
-}]);
+
+        }]);

@@ -14,21 +14,17 @@ CalendarController.controller('CalendarController',
                     center: '',
                     right: 'title'
                 },
-                //
-                // THIS KEY WON'T WORK IN PRODUCTION!!!
-                // To make your own Google API key, follow the directions here:
+
+                selectable: true,
+
                 // http://fullcalendar.io/docs/google_calendar/
                 googleCalendarApiKey: 'AIzaSyC7jEyslwOpBHRCs2XoDcAE8jRKu3eyCM0',
-
-                // US Holidays
-                events: 'en.usa#holiday@group.v.calendar.google.com',
-
+                events: 'en.usa#holiday@group.v.calendar.google.com', // US Holidays
                 eventClick: function (event) {
                     // opens events in a popup window
                     window.open(event.url, 'gcalevent', 'width=700,height=600');
                     return false;
                 },
-
                 loading: function (bool) {
                     $('#loading').toggle(bool);
                 }
