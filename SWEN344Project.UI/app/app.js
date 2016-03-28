@@ -39,6 +39,9 @@ angApp.config(['$routeProvider', '$facebookProvider',
         $facebookProvider.setVersion("v2.5");
         $facebookProvider.setAppId("198266390540885");
         $facebookProvider.setPermissions("email,public_profile,user_friends,user_posts");
+        $facebookProvider.setCustomInit({
+            cookie: true,
+        });
 
         $routeProvider.
             when('/', {
