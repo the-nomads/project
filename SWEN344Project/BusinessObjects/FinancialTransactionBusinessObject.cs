@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEN344Project.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,10 @@ namespace SWEN344Project.BusinessInterfaces
 {
     public class FinancialTransactionBusinessObject : IFinancialTransactionBusinessObject
     {
-        public int GetTransactions()
+        public List<FinancialTransaction> GetTransactionsForUser(User user)
         {
-            return 100;
+            // TODO: Implement
+            return null;
         }
     }
 }

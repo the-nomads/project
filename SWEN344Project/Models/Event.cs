@@ -7,16 +7,14 @@ using System.Web;
 
 namespace SWEN344Project.Models
 {
-    public class FinancialTransaction
+    public class Event
     {
         [Key]
-        public int FinancialTransactionID { get; set; }
+        public int EventID { get; set; }
+        public string EventName { get; set; }
 
+        [ForeignKey("UserID")] 
         public int UserID { get; set; }
-        [ForeignKey("UserID")]
         public User User { get; set; }
-
-        public decimal Amount { get; set; }
-        public bool AmountMovedInToUserAccount { get; set; }
     }
 }

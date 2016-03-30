@@ -27,19 +27,29 @@ namespace SWEN344Project
             builder.RegisterType<FinancialTransactionBusinessObject>()
                             .As<IFinancialTransactionBusinessObject>()
                             .InstancePerLifetimeScope();
+            builder.RegisterType<EventBusinessObject>()
+                            .As<IEventBusinessObject>()
+                            .InstancePerLifetimeScope();
+            builder.RegisterType<UserBusinessObject>()
+                            .As<IUserBusinessObject>()
+                            .InstancePerLifetimeScope();
 
 
             var assembly = typeof(SWEN344Project.Controllers.FinancialTransactionController).Assembly;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            var container = builder.Build();
-            var resolver = new AutofacWebApiDependencyResolver(container);
+            var c = builder.Build();
+            var resolver = new AutofacWebApiDependencyResolver(c);
             config.DependencyResolver = resolver;
 
             WebApiConfig.Register(config);
 
             app.UseWebApi(config);
+
+            container = c;
         }
+
+        public static IContainer container;
 
         private void RegisterDependencies(HttpConfiguration config)
         {

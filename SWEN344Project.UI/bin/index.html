@@ -8,7 +8,16 @@
         <div class="ng-view" ug></div>
     </div>
     <script>
-        var useMockedBackEnd = true;
+        var useMockedBackEnd = false;
+        var CaveWallAPIURL = "http://localhost:12659/";
+
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function (pattern) {
+                //'use strict';
+                var d = this.length - pattern.length;
+                return d >= 0 && this.lastIndexOf(pattern) === d;
+            };
+        }
     </script>
     <script src="/assets/scripts/lib/jquery-2.2.1.min.js"></script>
     <script src="/assets/scripts/lib/angular.min.js"></script>
@@ -27,6 +36,7 @@
     <script src="/app/services/stockService.js"></script>
     <script src="/app/services/calendarService.js"></script>
     <script src="/app/services/authService.js"></script>
+    <script src="/app/services/caveWallAPIService.js"></script>
 
     <script src="/app/components/shared/facebook/facebookLoginController.js"></script>
     <script src="/app/components/home/homeController.js"></script>

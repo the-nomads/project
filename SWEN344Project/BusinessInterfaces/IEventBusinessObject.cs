@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SWEN344Project.BusinessInterfaces
 {
-    public interface IFinancialTransactionBusinessObject
+    public interface IEventBusinessObject
     {
-        List<FinancialTransaction> GetTransactionsForUser(User user);
+        List<Event> GetEventsForUser(User user);
     }
 }

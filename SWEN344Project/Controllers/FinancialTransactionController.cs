@@ -27,7 +27,16 @@ namespace SWEN344Project.Controllers
         [Route("all")]
         public async Task<HttpResponseMessage> GetAllTransactions()
         {
-            return this.CreateOKResponse(new { a = 1, b = 2 });
+            try
+            {
+                var user = this.GetCurrentUser();
+                var transactions = this._ftbo.GetTransactionsForUser(user);
+                return this.CreateOKResponse(transactions);
+            }
+            catch (Exception)
+            {
+                return this.CreateErrorResponse();
+            }
         }
 
         [HttpGet]
@@ -36,6 +45,14 @@ namespace SWEN344Project.Controllers
         {
             var id = this._ftbo.GetTransactions();
             return Request.CreateResponse(HttpStatusCode.OK, "Your id was " + financialtransactionid + " my id was " + id);
+        }
+
+        [HttpOptions]
+        [Route("all")]
+        [Route("")]
+        public HttpResponseMessage Options()
+        {
+            return this.GetOptionsRequest();
         }
     }
 }

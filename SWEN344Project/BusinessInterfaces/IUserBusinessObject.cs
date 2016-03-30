@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SWEN344Project.BusinessInterfaces
 {
-    public interface IFinancialTransactionBusinessObject
+    public interface IUserBusinessObject
     {
-        List<FinancialTransaction> GetTransactionsForUser(User user);
+        User GetOrCreateUser(string FacebookID);
     }
 }
