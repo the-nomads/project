@@ -17,6 +17,7 @@ namespace SWEN344Project.Models
         public DbSet<User> Users { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<UserFinance> UserFinance { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

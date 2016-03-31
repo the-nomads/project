@@ -9,7 +9,7 @@ caveWallAPIService.service('CaveWallAPIService', ['$facebook', 'AuthService', fu
         apiUrl += "/";
     }
 
-    this.makeCall = function (method, resource, id, callback, onError) {
+    this.makeCall = function (method, resource, id, dataToPost, callback, onError) {
         var callHandle = "APISvcCall_" + String(staticInt);
         staticInt++;
         authService.doOnLogin(callHandle, function () {
@@ -17,6 +17,10 @@ caveWallAPIService.service('CaveWallAPIService', ['$facebook', 'AuthService', fu
             if (id != null) {
                 callUrl += "/" + id;
             }
+
+            var realData = null;
+            if (dataToPost != null)
+                realData = JSON.stringify(dataToPost);
 
             var extraHeaders = {};
             var fbResponse = $facebook.getAuthResponse();
@@ -29,10 +33,16 @@ caveWallAPIService.service('CaveWallAPIService', ['$facebook', 'AuthService', fu
                 cache: false,
                 crossDomain: true,
                 dataType: 'json',
+                data: realData,
                 method: method,
                 headers: extraHeaders,
                 success: function (result) {
                     if (callback) {
+                        try
+                        {
+                            result = JSON.parse(result);
+                        }
+                        catch (exc) { }
                         callback(result);
                     }
                 },

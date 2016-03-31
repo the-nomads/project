@@ -17,5 +17,15 @@ namespace SWEN344Project.BusinessInterfaces
                 return events;
             }
         }
+
+        public void CreateNewEvent(User user, Event toCreate)
+        {
+            using (var ctx = new CaveWallContext())
+            {
+                toCreate.UserID = user.UserID;
+                ctx.Events.Add(toCreate);
+                ctx.SaveChanges();
+            }
+        }
     }
 }

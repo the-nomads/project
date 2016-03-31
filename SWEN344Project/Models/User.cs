@@ -12,6 +12,7 @@ namespace SWEN344Project.Models
         public int UserID { get; set; }
         public string FacebookID { get; set; }
         public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; } 
+        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual ICollection<UserFinance> UserFinances { get; set; } 
     }
 }

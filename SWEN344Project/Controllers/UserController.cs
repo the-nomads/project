@@ -12,26 +12,26 @@ using System.IO;
 
 namespace SWEN344Project.Controllers
 {
-    [RoutePrefix("users/financialtransactions")]
-    public class FinancialTransactionController : BaseAPIController
+    [RoutePrefix("users")]
+    public class UserController : BaseAPIController
     {
         private readonly IFinancialTransactionBusinessObject _ftbo;
-        public FinancialTransactionController(
-            IFinancialTransactionBusinessObject ftbo
+        public UserController(
+            IFinancialTransactionBusinessObject fbo
             )
         {
-            this._ftbo = ftbo;
+            this._ftbo = fbo;
         }
 
         [HttpGet]
-        [Route("all")]
-        public async Task<HttpResponseMessage> GetAllTransactions()
+        [Route("balance")]
+        public async Task<HttpResponseMessage> GetUserBalance()
         {
             try
             {
                 var user = this.GetCurrentUser();
-                var transactions = this._ftbo.GetTransactionsForUser(user);
-                return this.CreateOKResponse(transactions);
+                var finance = this._ftbo.GetUserFinance(user, Constants.Currency.USD);
+                return this.CreateOKResponse(finance);
             }
             catch (Exception)
             {
@@ -39,9 +39,8 @@ namespace SWEN344Project.Controllers
             }
         }
 
-
         [HttpOptions]
-        [Route("all")]
+        [Route("balance")]
         [Route("")]
         public HttpResponseMessage Options()
         {

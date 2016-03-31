@@ -10,5 +10,9 @@ namespace SWEN344Project.BusinessInterfaces
     public interface IFinancialTransactionBusinessObject
     {
         List<FinancialTransaction> GetTransactionsForUser(User user);
+
+        List<UserFinance> GetUserFinances(User user);
+
+        UserFinance GetUserFinance(User user, string Currency);
     }
 }

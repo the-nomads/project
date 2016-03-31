@@ -8,6 +8,8 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using SWEN344Project.BusinessInterfaces;
 using System.Reflection;
+using System.Data.Entity;
+using SWEN344Project.Models;
 
 [assembly: OwinStartup(typeof(SWEN344Project.Startup))]
 namespace SWEN344Project
@@ -16,6 +18,8 @@ namespace SWEN344Project
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer<CaveWallContext>(new DropCreateDatabaseIfModelChanges<CaveWallContext>());
+
             var config = new HttpConfiguration();
 
             RegisterDependencies(config);

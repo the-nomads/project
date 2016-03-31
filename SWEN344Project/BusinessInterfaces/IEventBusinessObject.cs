@@ -10,5 +10,6 @@ namespace SWEN344Project.BusinessInterfaces
     public interface IEventBusinessObject
     {
         List<Event> GetEventsForUser(User user);
+        void CreateNewEvent(User user, Event toCreate);
     }
 }

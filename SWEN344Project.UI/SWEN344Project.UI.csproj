@@ -101,7 +101,7 @@
     <Content Include="assets\css\lib\fullcalendar.print.css" />
     <Content Include="assets\css\lib\semantic.min.css" />
     <Content Include="assets\css\Site.css" />
-    <Content Include="assets\scripts\facebookLogin.js" />
+    <Content Include="assets\scripts\util.js" />
     <Content Include="assets\scripts\lib\angular-chart.min.js" />
     <Content Include="assets\scripts\lib\angular-route.min.js" />
     <Content Include="assets\scripts\lib\angular.min.js" />

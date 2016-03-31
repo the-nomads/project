@@ -11,10 +11,13 @@ namespace SWEN344Project.Models
     {
         [Key]
         public int EventID { get; set; }
-        public string EventName { get; set; }
 
-        [ForeignKey("UserID")] 
         public int UserID { get; set; }
         public User User { get; set; }
+
+        public string EventName { get; set; }
+        public bool EventIsAllDay { get; set; }
+        public DateTime EventStartDate { get; set; }
+        public DateTime? EventEndDate { get; set; }
     }
 }

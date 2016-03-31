@@ -19,6 +19,13 @@ namespace SWEN344Project.BusinessInterfaces
                     u = new User();
                     u.FacebookID = FacebookID;
                     ctx.Users.Add(u);
+                    ctx.SaveChanges(); // Gives the user a UserID, so we can use it below
+
+                    var uf = new UserFinance();
+                    uf.UserID = u.UserID;
+                    uf.Amount = Constants.MoneyUsersStartWith;
+                    uf.Currency = Constants.Currency.USD;
+                    ctx.UserFinance.Add(uf);
                     ctx.SaveChanges();
                 }
                 return u;

@@ -12,14 +12,21 @@ namespace SWEN344Project.Controllers
     [RoutePrefix("financialtransactions")]
     public class BaseAPIController : ApiController
     {
-        protected HttpResponseMessage CreateOKResponse(object data)
+        protected HttpResponseMessage CreateOKResponse(object data = null)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, Newtonsoft.Json.JsonConvert.SerializeObject(data));
+            if (data != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, Newtonsoft.Json.JsonConvert.SerializeObject(data));
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
         }
 
         protected HttpResponseMessage CreateErrorResponse(object data = null)
         {
-            if (data == null)
+            if (data != null)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, Newtonsoft.Json.JsonConvert.SerializeObject(data));
             }

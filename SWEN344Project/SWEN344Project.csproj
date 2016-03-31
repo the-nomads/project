@@ -218,16 +218,19 @@
     <Compile Include="BusinessObjects\EventBusinessObject.cs" />
     <Compile Include="BusinessObjects\FinancialTransactionBusinessObject.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FinancialTransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CaveWallContext.cs" />
+    <Compile Include="Models\UserFinance.cs" />
     <Compile Include="Models\FinancialTransaction.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
