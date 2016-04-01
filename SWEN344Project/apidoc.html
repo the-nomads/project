@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>Team Nomad CaveWall API</title>
+</head>
+    <body>
+        <h1>
+            Team Nomad CaveWall API
+        </h1>
+        <h2>
+            API Calls
+        </h2>
+        <h4>
+            The information contained in these calls correspond with using the javascript CaveWallAPIService.
+            <br /><br />
+            To make an API call on the front-end, call it like this:
+            <br /><br />
+            CaveWallAPIService.makeCall(METHOD, RESOURCE, ID, DATA TO POST, SUCCESS CALLBACK, FAILURE CALLBACK);
+        </h4>
+        <ul>
+            <li>
+                Users
+                <ul>
+                    <li>
+                        Get Current User's USD Balance
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: users/balance</li>
+                            <li>ID: none</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: UserFinance object</li>
+                            <li>Exceptions: User not logged in</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                FinancialTransaction
+                <ul>
+                    <li>
+                        Get All Current User's Transaction
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: users/financialtransactions</li>
+                            <li>ID: none</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: List of FinancialTransaction objects</li>
+                            <li>Exceptions: User not logged in</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Events
+                <ul>
+                    <li>
+                        Get All Current User's Events
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: events/all</li>
+                            <li>ID: none</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: List of Event object</li>
+                            <li>Exceptions: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Create New Event
+                        <ul>
+                            <li>Method: POST</li>
+                            <li>Resource: events</li>
+                            <li>ID: none</li>
+                            <li>Data To Post: Event object</li>
+                            <li>Returns: none</li>
+                            <li>Exceptions: User not logged in</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2>
+            Return Objects
+        </h2>
+        <h3>
+            Note: don't worry about posting UserID, or entity IDs like UserFinanceID. Those are handled in the back end.
+            <br />
+            The only difference is if you're editing something, in wich case it should get passed in as the "ID"
+        </h3>
+        <ul>
+            <li>
+                UserFinance
+                <ul>
+                    <li>UserFinanceID</li>
+                    <li>UserID</li>
+                    <li>Amount</li>
+                    <li>Currency - Matches Constant Currency</li>
+                </ul>
+            </li>
+            <li>
+                Event
+                <ul>
+                    <li>EventID</li>
+                    <li>UserID</li>
+                    <li>EventName</li>
+                    <li>EventIsAllDay</li>
+                    <li>EventStartDate - Required</li>
+                    <li>EventEndDate - Not Required</li>
+                    <li>To come: stuff for repeated events...</li>
+                </ul>
+            </li>
+            <li>
+                FinancialTransaction
+                <ul>
+                    <li>FinancialTransactionID</li>
+                    <li>UserID</li>
+                    <li>Amount</li>
+                    <li>Currency - Matches Constant Currency</li>
+                    <li>FinancialTransactionDirection - Matches Constant "IN" or "OUT"</li>
+                    <li>TransactionDate</li>
+                    <li>TransactionTypeID - Matches Constant TransactionType</li>
+                    <li>StockName</li>
+                </ul>
+            </li>
+        </ul>
+    </body>
+</html>

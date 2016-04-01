@@ -59,8 +59,13 @@ namespace SWEN344Project.Controllers
             }
         }
 
+
+
+
+
         [HttpOptions]
         [Route("all")]
+        [Route("{eventid}")]
         [Route("")]
         public HttpResponseMessage Options()
         {
