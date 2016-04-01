@@ -59,9 +59,46 @@ namespace SWEN344Project.Controllers
             }
         }
 
+        //[HttpPut]
+        //[Route("{eventid}")]
+        //public async Task<HttpResponseMessage> UpdateEvent(int eventid)
+        //{
+        //    try
+        //    {
+        //        var str = await Request.Content.ReadAsStringAsync();
+        //        var toUpdate = JsonConvert.DeserializeObject<Event>(str);
+        //        var user = this.GetCurrentUser();
 
 
+        //        this._ebo.EditEvent(user, eventid, toUpdate);
+        //        return Request.CreateResponse(HttpStatusCode.Created);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return this.CreateErrorResponse();
+        //    }
+        //}
 
+        //[HttpDelete]
+        //[Route("{eventid}")]
+        //public async Task<HttpResponseMessage> DeleteEvent(int eventid)
+        //{
+        //    try
+        //    {
+        //        var user = this.GetCurrentUser();
+        //        var e = this._ebo.GetEvent(eventid);
+        //        if (e.UserID != user.UserID)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.Forbidden);
+        //        }
+        //        this._ebo.DeleteEvent(eventid);
+        //        return this.CreateOKResponse();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return this.CreateErrorResponse();
+        //    }
+        //}
 
         [HttpOptions]
         [Route("all")]
