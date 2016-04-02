@@ -37,6 +37,9 @@ namespace SWEN344Project
             builder.RegisterType<UserBusinessObject>()
                             .As<IUserBusinessObject>()
                             .InstancePerLifetimeScope();
+            builder.RegisterType<PersistenceBusinessObject>()
+                            .As<IPersistenceBusinessObject>()
+                            .InstancePerLifetimeScope();
 
 
             var assembly = typeof(SWEN344Project.Controllers.FinancialTransactionController).Assembly;

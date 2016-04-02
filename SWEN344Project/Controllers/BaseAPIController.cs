@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SWEN344Project.BusinessInterfaces;
 using SWEN344Project.Models;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -12,23 +13,75 @@ namespace SWEN344Project.Controllers
     [RoutePrefix("financialtransactions")]
     public class BaseAPIController : ApiController
     {
-        protected HttpResponseMessage CreateOKResponse(object data = null)
+        protected HttpResponseMessage CreateResponse(HttpStatusCode code, object data = null)
         {
             if (data != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Newtonsoft.Json.JsonConvert.SerializeObject(data));
+                var response = Request.CreateResponse(code);
+                response.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(data));
+                return response;
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(code);
             }
+        }
+
+        protected HttpResponseMessage CreateOKResponse(object data = null)
+        {
+            return this.CreateResponse(HttpStatusCode.OK, data);
         }
 
         protected HttpResponseMessage CreateErrorResponse(object data = null)
         {
             if (data != null)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, Newtonsoft.Json.JsonConvert.SerializeObject(data));
+                Exception exc = data as Exception;
+
+                if (exc != null) // It is an exception
+                {
+                    bool ShowException = false;
+#if DEBUG
+                    ShowException = true;
+#endif
+
+                    if (ShowException)
+                    {
+
+                        string msg = "";
+                        int layers = 0;
+                        do
+                        {
+                            if (layers++ > 100)
+                                break;
+
+                            if (layers > 1)
+                                msg += "Inner Exception " + (layers - 1) + ": \r\n";
+                            else
+                                msg += "Exception: \r\n";
+
+                            msg += exc.Message + "\r\n\r\n";
+                            msg += "Stack Trace: \r\n";
+                            msg += exc.StackTrace;
+                            msg += "\r\n\r\n";
+
+                            exc = exc.InnerException;
+                        }
+                        while (exc != null);
+
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError, msg);
+                    }
+                    else // don't show the exception, so just respond with InternalServerError
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                    }
+                }
+                else // The data is not an exepction, just serialize it and move on
+                {
+                    var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                    response.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(data));
+                    return response;
+                }
             }
             else
             {

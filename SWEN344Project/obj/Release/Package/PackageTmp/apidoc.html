@@ -29,7 +29,7 @@
                             <li>ID: none</li>
                             <li>Data To Post: none</li>
                             <li>Returns: UserFinance object</li>
-                            <li>Exceptions: User not logged in</li>
+                            <li>Exception: User not logged in</li>
                         </ul>
                     </li>
                 </ul>
@@ -45,7 +45,7 @@
                             <li>ID: none</li>
                             <li>Data To Post: none</li>
                             <li>Returns: List of FinancialTransaction objects</li>
-                            <li>Exceptions: User not logged in</li>
+                            <li>Exception: User not logged in</li>
                         </ul>
                     </li>
                 </ul>
@@ -61,7 +61,7 @@
                             <li>ID: none</li>
                             <li>Data To Post: none</li>
                             <li>Returns: List of Event object</li>
-                            <li>Exceptions: User not logged in</li>
+                            <li>Exception: User not logged in</li>
                         </ul>
                     </li>
                     <li>
@@ -72,7 +72,31 @@
                             <li>ID: none</li>
                             <li>Data To Post: Event object</li>
                             <li>Returns: none</li>
-                            <li>Exceptions: User not logged in</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Update Event
+                        <ul>
+                            <li>Method: PUT</li>
+                            <li>Resource: events</li>
+                            <li>ID: EventID</li>
+                            <li>Data To Post: Event object</li>
+                            <li>Returns: none</li>
+                            <li>Exception: User not logged in</li>
+                            <li>Exception: User Forbidden</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Delete Event
+                        <ul>
+                            <li>Method: DELETE</li>
+                            <li>Resource: events</li>
+                            <li>ID: EventID</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: none</li>
+                            <li>Exception: User not logged in</li>
+                            <li>Exception: User Forbidden</li>
                         </ul>
                     </li>
                 </ul>

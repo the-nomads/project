@@ -9,27 +9,30 @@ namespace SWEN344Project.BusinessInterfaces
 {
     public class UserBusinessObject : IUserBusinessObject
     {
+        private readonly IPersistenceBusinessObject _pbo;
+        public UserBusinessObject(IPersistenceBusinessObject pbo)
+        {
+            this._pbo = pbo;
+        }
+
         public User GetOrCreateUser(string FacebookID)
         {
-            using (var ctx = new CaveWallContext())
+            var u = this._pbo.Users.All.FirstOrDefault(x => x.FacebookID == FacebookID);
+            if (u == null)
             {
-                User u = ctx.Users.FirstOrDefault(x => x.FacebookID == FacebookID);
-                if (u == null)
-                {
-                    u = new User();
-                    u.FacebookID = FacebookID;
-                    ctx.Users.Add(u);
-                    ctx.SaveChanges(); // Gives the user a UserID, so we can use it below
+                u = new User();
+                u.FacebookID = FacebookID;
+                this._pbo.Users.AddEntity(u);
+                this._pbo.SaveChanges(); // Gives the user a UserID, so we can use it below
 
-                    var uf = new UserFinance();
-                    uf.UserID = u.UserID;
-                    uf.Amount = Constants.MoneyUsersStartWith;
-                    uf.Currency = Constants.Currency.USD;
-                    ctx.UserFinance.Add(uf);
-                    ctx.SaveChanges();
-                }
-                return u;
+                var uf = new UserFinance();
+                uf.UserID = u.UserID;
+                uf.Amount = Constants.MoneyUsersStartWith;
+                uf.Currency = Constants.Currency.USD;
+                this._pbo.UserFinances.AddEntity(uf);
+                this._pbo.SaveChanges();
             }
+            return u;
         }
     }
 }

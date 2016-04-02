@@ -211,9 +211,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessInterfaces\IPersistenceBusinessObject.cs" />
     <Compile Include="BusinessInterfaces\IUserBusinessObject.cs" />
     <Compile Include="BusinessInterfaces\IEventBusinessObject.cs" />
     <Compile Include="BusinessInterfaces\IFinancialTransactionBusinessObject.cs" />
+    <Compile Include="BusinessObjects\PersistenceBusinessObject.cs" />
     <Compile Include="BusinessObjects\UserBusinessObject.cs" />
     <Compile Include="BusinessObjects\EventBusinessObject.cs" />
     <Compile Include="BusinessObjects\FinancialTransactionBusinessObject.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataSet.cs" />
     <Compile Include="Models\CaveWallContext.cs" />
     <Compile Include="Models\UserFinance.cs" />
     <Compile Include="Models\FinancialTransaction.cs" />
@@ -252,7 +255,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\Nomad Production - API.pubxml">
+    <None Include="Properties\PublishProfiles\Nomad Production - API - Debug.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\Nomad Production - API - Release.pubxml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

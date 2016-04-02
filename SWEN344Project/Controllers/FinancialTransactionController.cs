@@ -30,12 +30,17 @@ namespace SWEN344Project.Controllers
             try
             {
                 var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
                 var transactions = this._ftbo.GetTransactionsForUser(user);
                 return this.CreateOKResponse(transactions);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                return this.CreateErrorResponse();
+                return this.CreateErrorResponse(exc);
             }
         }
 

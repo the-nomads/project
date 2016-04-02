@@ -9,22 +9,44 @@ namespace SWEN344Project.BusinessInterfaces
 {
     public class EventBusinessObject : IEventBusinessObject
     {
+        private readonly IPersistenceBusinessObject _pbo;
+        public EventBusinessObject(IPersistenceBusinessObject pbo)
+        {
+            this._pbo = pbo;
+        }
+
         public List<Event> GetEventsForUser(User user)
         {
-            using (var ctx = new CaveWallContext())
-            {
-                var events = ctx.Events.Where(x => x.UserID == user.UserID).ToList();
-                return events;
-            }
+            var events = this._pbo.ValidEvents.Where(x => x.UserID == user.UserID).ToList();
+            return events;
         }
 
         public void CreateNewEvent(User user, Event toCreate)
         {
-            using (var ctx = new CaveWallContext())
+            toCreate.UserID = user.UserID;
+            this._pbo.Events.AddEntity(toCreate);
+            this._pbo.SaveChanges();
+        }
+
+        public void EditEvent(int eventID, Event toUpdate)
+        {
+            var e = this._pbo.Events.All.FirstOrDefault(x => x.EventID == eventID);
+            e.UpdateFields(toUpdate);
+            this._pbo.SaveChanges();
+        }
+
+        public Event GetEvent(int eventID)
+        {
+            var e = this._pbo.ValidEvents.FirstOrDefault(x => x.EventID == eventID);
+            return e;
+        }
+
+        public void DeleteEvent(int eventID)
+        {
+            var e = this._pbo.ValidEvents.FirstOrDefault(x => x.EventID == eventID);
+            if (e != null)
             {
-                toCreate.UserID = user.UserID;
-                ctx.Events.Add(toCreate);
-                ctx.SaveChanges();
+                e.IsDeleted = true;
             }
         }
     }

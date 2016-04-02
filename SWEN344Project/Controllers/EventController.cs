@@ -32,12 +32,17 @@ namespace SWEN344Project.Controllers
             try
             {
                 var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
                 var events = this._ebo.GetEventsForUser(user);
                 return this.CreateOKResponse(events);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                return this.CreateErrorResponse();
+                return this.CreateErrorResponse(exc);
             }
         }
 
@@ -47,58 +52,87 @@ namespace SWEN344Project.Controllers
         {
             try
             {
+                var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
                 var str = await Request.Content.ReadAsStringAsync();
                 var toCreate = JsonConvert.DeserializeObject<Event>(str);
-                var user = this.GetCurrentUser();
                 this._ebo.CreateNewEvent(user, toCreate);
                 return this.CreateOKResponse();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                return this.CreateErrorResponse();
+                return this.CreateErrorResponse(exc);
             }
         }
 
-        //[HttpPut]
-        //[Route("{eventid}")]
-        //public async Task<HttpResponseMessage> UpdateEvent(int eventid)
-        //{
-        //    try
-        //    {
-        //        var str = await Request.Content.ReadAsStringAsync();
-        //        var toUpdate = JsonConvert.DeserializeObject<Event>(str);
-        //        var user = this.GetCurrentUser();
+        [HttpPut]
+        [Route("{eventid}")]
+        public async Task<HttpResponseMessage> UpdateEvent(int eventid)
+        {
+            try
+            {
+                var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
 
+                var str = await Request.Content.ReadAsStringAsync();
+                var toUpdate = JsonConvert.DeserializeObject<Event>(str);
 
-        //        this._ebo.EditEvent(user, eventid, toUpdate);
-        //        return Request.CreateResponse(HttpStatusCode.Created);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return this.CreateErrorResponse();
-        //    }
-        //}
+                var e = this._ebo.GetEvent(eventid);
+                if (e == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.NotFound);
+                }
+                if (e.UserID != user.UserID)
+                {
+                    return this.CreateResponse(HttpStatusCode.Forbidden);
+                }
 
-        //[HttpDelete]
-        //[Route("{eventid}")]
-        //public async Task<HttpResponseMessage> DeleteEvent(int eventid)
-        //{
-        //    try
-        //    {
-        //        var user = this.GetCurrentUser();
-        //        var e = this._ebo.GetEvent(eventid);
-        //        if (e.UserID != user.UserID)
-        //        {
-        //            return Request.CreateResponse(HttpStatusCode.Forbidden);
-        //        }
-        //        this._ebo.DeleteEvent(eventid);
-        //        return this.CreateOKResponse();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return this.CreateErrorResponse();
-        //    }
-        //}
+                this._ebo.EditEvent(eventid, toUpdate);
+                return this.CreateResponse(HttpStatusCode.Created);
+            }
+            catch (Exception exc)
+            {
+                return this.CreateErrorResponse(exc);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{eventid}")]
+        public async Task<HttpResponseMessage> DeleteEvent(int eventid)
+        {
+            try
+            {
+                var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
+                var e = this._ebo.GetEvent(eventid);
+                if (e == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.NotFound);
+                }
+                if (e.UserID != user.UserID)
+                {
+                    return this.CreateResponse(HttpStatusCode.Forbidden);
+                }
+
+                this._ebo.DeleteEvent(eventid);
+                return this.CreateOKResponse();
+            }
+            catch (Exception exc)
+            {
+                return this.CreateErrorResponse(exc);
+            }
+        }
 
         [HttpOptions]
         [Route("all")]
