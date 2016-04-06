@@ -10,6 +10,7 @@ using SWEN344Project.BusinessInterfaces;
 using System.Reflection;
 using System.Data.Entity;
 using SWEN344Project.Models;
+using SWEN344Project.Models.PersistentModels;
 
 [assembly: OwinStartup(typeof(SWEN344Project.Startup))]
 namespace SWEN344Project
@@ -36,6 +37,12 @@ namespace SWEN344Project
                             .InstancePerLifetimeScope();
             builder.RegisterType<UserBusinessObject>()
                             .As<IUserBusinessObject>()
+                            .InstancePerLifetimeScope();
+            builder.RegisterType<WeatherBusinessObject>()
+                            .As<IWeatherBusinessObject>()
+                            .InstancePerLifetimeScope();
+            builder.RegisterType<StockInformationBusinessObject>()
+                            .As<IStockInformationBusinessObject>()
                             .InstancePerLifetimeScope();
             builder.RegisterType<PersistenceBusinessObject>()
                             .As<IPersistenceBusinessObject>()

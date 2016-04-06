@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace SWEN344Project.Models
+namespace SWEN344Project.Models.PersistentModels
 {
     public class UserFinance
     {

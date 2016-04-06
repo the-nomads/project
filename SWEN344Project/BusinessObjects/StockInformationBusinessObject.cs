@@ -1,5 +1,4 @@
 ﻿using SWEN344Project.Models;
-using SWEN344Project.Models.PersistentModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace SWEN344Project.BusinessInterfaces
 {
-    public interface IUserBusinessObject
+    public class StockInformationBusinessObject : IStockInformationBusinessObject
     {
-        User GetOrCreateUser(string FacebookID);
+        public StockInformationBusinessObject()
+        {
+
+        }
+
     }
 }

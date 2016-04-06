@@ -5,7 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
-namespace SWEN344Project.Models
+namespace SWEN344Project.Models.PersistentModels
 {
     public class DataSet<T> where T : class
     {

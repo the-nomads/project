@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SWEN344Project.BusinessInterfaces;
 using SWEN344Project.Models;
+using SWEN344Project.Models.PersistentModels;
 using System;
 using System.IO;
 using System.Net;
