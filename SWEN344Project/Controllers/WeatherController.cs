@@ -25,7 +25,7 @@ namespace SWEN344Project.Controllers
 
 
         [HttpGet]
-        [Route("{zipcode}/current")]
+        [Route("current/{zipcode}")]
         public HttpResponseMessage GetCurrentWeather(int zipcode)
         {
             try
@@ -40,7 +40,7 @@ namespace SWEN344Project.Controllers
         }
 
         [HttpGet]
-        [Route("{zipcode}/forecast")]
+        [Route("forecast/{zipcode}")]
         public HttpResponseMessage GetWeatherForecast(int zipcode)
         {
             try

@@ -101,12 +101,39 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                Weather
+                <ul>
+                    <li>
+                        Get Current Weather
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: weather/current</li>
+                            <li>ID: Zip Code</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: CurrentWeather</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Get Weather Forecast
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: weather/forecast</li>
+                            <li>ID: Zip Code</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: WeatherForecast</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <h2>
             Return Objects
         </h2>
         <h3>
-            Note: don't worry about posting UserID, or entity IDs like UserFinanceID. Those are handled in the back end.
+            Note: don't worry about POSTing or PUT-ing UserID, or entity IDs like UserFinanceID. Those are handled in the back end.
             <br />
             The only difference is if you're editing something, in wich case it should get passed in as the "ID"
         </h3>
