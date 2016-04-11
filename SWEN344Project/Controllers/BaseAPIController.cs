@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using SWEN344Project.BusinessInterfaces;
+using SWEN344Project.Helpers;
 using SWEN344Project.Models;
 using SWEN344Project.Models.PersistentModels;
 using System;
@@ -93,15 +94,10 @@ namespace SWEN344Project.Controllers
         private string GetCurrentUserID()
         {
             string token = HttpContext.Current.Request.Headers.Get("accessToken");
-            // TODO: sanitize token
-            var request = WebRequest.Create("https://graph.facebook.com/me?access_token=" + token);
-            var response = request.GetResponse();
-            var reader = new StreamReader(response.GetResponseStream());
-            string responseFromServer = reader.ReadToEnd();
-            reader.Close();
-            response.Close();
+            var requestUrl = Constants.ExternalAPIs.Facebook.GetUserRequestUrl(token);
 
-            var userobj = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserInfo>(responseFromServer);
+            var userobj = new HttpRequestHelper().PerformRequest<FacebookUserInfo>(requestUrl);
+            
             return userobj.id;
         }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using SWEN344Project.BusinessInterfaces;
 using System.IO;
+using SWEN344Project.Helpers;
 
 namespace SWEN344Project.Controllers
 {
