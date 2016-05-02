@@ -56,6 +56,8 @@ namespace SWEN344Project.Controllers
 
         [HttpOptions]
         [Route("")]
+        [Route("forecast/{zipcode}")]
+        [Route("current/{zipcode}")]
         public HttpResponseMessage Options()
         {
             return this.GetOptionsRequest();

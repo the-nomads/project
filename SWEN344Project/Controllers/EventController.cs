@@ -62,7 +62,7 @@ namespace SWEN344Project.Controllers
                 var str = await Request.Content.ReadAsStringAsync();
                 var toCreate = JsonConvert.DeserializeObject<Event>(str);
                 this._ebo.CreateNewEvent(user, toCreate);
-                return this.CreateOKResponse();
+                return this.CreateOKResponse(HttpStatusCode.Created);
             }
             catch (Exception exc)
             {
@@ -96,7 +96,7 @@ namespace SWEN344Project.Controllers
                 }
 
                 this._ebo.EditEvent(eventid, toUpdate);
-                return this.CreateResponse(HttpStatusCode.Created);
+                return this.CreateOKResponse();
             }
             catch (Exception exc)
             {
