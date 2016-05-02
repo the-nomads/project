@@ -16,6 +16,7 @@ namespace SWEN344Project.BusinessInterfaces
         DataSet<FinancialTransaction> FinancialTransactions { get; }
         DataSet<Event> Events { get; }
         DataSet<UserFinance> UserFinances { get; }
+        DataSet<UserStock> UserStocks { get; }
 
         void SaveChanges();
     }

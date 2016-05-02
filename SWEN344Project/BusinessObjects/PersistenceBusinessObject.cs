@@ -17,6 +17,7 @@ namespace SWEN344Project.BusinessInterfaces
             this.Users = new DataSet<User>(this._ctx.Users);
             this.Events = new DataSet<Event>(this._ctx.Events);
             this.UserFinances = new DataSet<UserFinance>(this._ctx.UserFinances);
+            this.UserStocks = new DataSet<UserStock>(this._ctx.UserStocks);
         }
 
         private CaveWallContext _ctx;
@@ -26,6 +27,7 @@ namespace SWEN344Project.BusinessInterfaces
         public DataSet<User> Users { get; private set; }
         public DataSet<Event> Events { get; private set; }
         public DataSet<UserFinance> UserFinances { get; private set; }
+        public DataSet<UserStock> UserStocks { get; private set; }
 
         public void SaveChanges()
         {

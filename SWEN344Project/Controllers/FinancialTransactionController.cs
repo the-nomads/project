@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using SWEN344Project.BusinessInterfaces;
 using System.IO;
+using Newtonsoft.Json;
+using SWEN344Project.Models.PersistentModels;
+using SWEN344Project.Helpers;
 
 namespace SWEN344Project.Controllers
 {
@@ -37,6 +40,61 @@ namespace SWEN344Project.Controllers
 
                 var transactions = this._ftbo.GetTransactionsForUser(user);
                 return this.CreateOKResponse(transactions);
+            }
+            catch (Exception exc)
+            {
+                return this.CreateErrorResponse(exc);
+            }
+        }
+
+
+        [HttpPost]
+        [Route("")]
+        public async Task<HttpResponseMessage> PurchaseOrSellStock()
+        {
+            try
+            {
+                var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
+                var str = await Request.Content.ReadAsStringAsync();
+                var toCreate = JsonConvert.DeserializeObject<FinancialTransaction>(str);
+                Constants.ReturnValues.StockTransactionResult message;
+
+                if (!toCreate.NumSharesBoughtOrSold.HasValue)
+                {
+                    return this.CreateResponse(HttpStatusCode.BadRequest, "NumSharesBoughtOrSold is required");
+                }
+                else if (toCreate.NumSharesBoughtOrSold < 1)
+                {
+                    return this.CreateResponse(HttpStatusCode.BadRequest, "NumSharesBoughtOrSold must be greater than 0");
+                }
+                else if (toCreate.FinancialTransactionDirection == Constants.FinancialTransactionDirection.IN)
+                {
+                    // "IN" means the user is getting money, so it's selling a stock
+                    message = this._ftbo.SellStock(user, toCreate.StockName, toCreate.NumSharesBoughtOrSold.Value);
+                }
+                else if (toCreate.FinancialTransactionDirection == Constants.FinancialTransactionDirection.OUT)
+                {
+                    // "OUT" means the user is losing money, so it's buying a stock
+                    message = this._ftbo.BuyStock(user, toCreate.StockName, toCreate.NumSharesBoughtOrSold.Value);
+                }
+                else
+                {
+                    return this.CreateResponse(HttpStatusCode.BadRequest, "FinancialTransactionDirection is required");
+                }
+
+                if (message == Constants.ReturnValues.StockTransactionResult.Success)
+                {
+                    return this.CreateOKResponse(HttpStatusCode.Created);
+                }
+                else
+                {
+                    return this.CreateResponse(HttpStatusCode.InternalServerError, message.ToString());
+                }
             }
             catch (Exception exc)
             {

@@ -18,6 +18,7 @@ namespace SWEN344Project.Models.PersistentModels
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<UserFinance> UserFinances { get; set; }
+        public DbSet<UserStock> UserStocks { get; set; }
 
         
 

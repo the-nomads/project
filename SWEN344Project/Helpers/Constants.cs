@@ -13,6 +13,17 @@ namespace SWEN344Project.Helpers
 {
     public class Constants
     {
+        public class ReturnValues
+        {
+            public enum StockTransactionResult
+            {
+                Success,
+                InsufficientFunds,
+                InsufficientStocks
+            }
+        }
+
+
         public enum FinancialTransactionType
         {
             Withdrawal = 1,
@@ -38,6 +49,14 @@ namespace SWEN344Project.Helpers
 
         public class ExternalAPIs
         {
+            public class YahooFinance
+            {
+                public static string GetBaseUrl()
+                {
+                    return "http://query.yahooapis.com/v1/public/yql";
+                }
+            }
+
             public class OpenWeatherMap
             {
                 public static string GetOpenWeatherMapAPIKey()
@@ -49,7 +68,6 @@ namespace SWEN344Project.Helpers
                 {
                     return "http://api.openweathermap.org/data/2.5/";
                 }
-
             }
 
             public class Facebook

@@ -97,6 +97,18 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -232,12 +244,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HttpRequestHelper.cs" />
+    <Compile Include="Hubs\MessageHub.cs" />
     <Compile Include="Models\PersistentModels\DataSet.cs" />
     <Compile Include="Models\PersistentModels\CaveWallContext.cs" />
+    <Compile Include="Models\PersistentModels\UserStock.cs" />
     <Compile Include="Models\PersistentModels\UserFinance.cs" />
     <Compile Include="Models\PersistentModels\FinancialTransaction.cs" />
     <Compile Include="Models\PersistentModels\Event.cs" />
     <Compile Include="Models\PersistentModels\User.cs" />
+    <Compile Include="Models\TransientModels\StockQuote.cs" />
     <Compile Include="Models\TransientModels\CurrentWeatherModel.cs" />
     <Compile Include="Models\TransientModels\WeatherForecastModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

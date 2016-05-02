@@ -1,4 +1,5 @@
-﻿using SWEN344Project.Models;
+﻿using SWEN344Project.Helpers;
+using SWEN344Project.Models;
 using SWEN344Project.Models.PersistentModels;
 using System;
 using System.Collections.Generic;
@@ -32,5 +33,39 @@ namespace SWEN344Project.BusinessInterfaces
         /// <param name="Currency"></param>
         /// <returns></returns>
         UserFinance GetUserFinance(User user, string Currency);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="stockName"></param>
+        /// <param name="numSharesToSell"></param>
+        /// <returns></returns>
+        Constants.ReturnValues.StockTransactionResult SellStock(User user, string stockName, int numSharesToSell);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="stockName"></param>
+        /// <param name="numSharesToSell"></param>
+        /// <returns></returns>
+        Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToSell);
+
+        /// <summary>
+        /// Gets all the stocks a user has
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        List<UserStock> GetUserStocks(User user);
+
+        /// <summary>
+        /// Gets a particular stock a user has
+        /// <para>May return null if the user has no stocks</para>
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="StockName"></param>
+        /// <returns></returns>
+        UserStock GetUserStock(User user, string StockName);
     }
 }

@@ -59,6 +59,7 @@ namespace SWEN344Project
             WebApiConfig.Register(config);
 
             app.UseWebApi(config);
+            //app.MapSignalR();
 
             container = c;
         }

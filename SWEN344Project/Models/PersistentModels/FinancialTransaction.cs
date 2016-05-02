@@ -20,6 +20,8 @@ namespace SWEN344Project.Models.PersistentModels
         public string FinancialTransactionDirection { get; set; }
         public DateTime TransactionDate { get; set; }
 
+        public int? NumSharesBoughtOrSold { get; set; }
+
         /// <summary>
         /// Relates to Constants.TransactionType
         /// </summary>
