@@ -121,7 +121,7 @@ namespace SWEN344Project.BusinessInterfaces
 
             // Load up the price of the stock
             var stockQuote = this._sibo.GetStockQuote(stockName);
-            var stockPrice = stockQuote.Ask; // Bid is the Bidding price of the stock, what you sell it for
+            var stockPrice = stockQuote.Bid; // Bid is the Bidding price of the stock, what you sell it for
 
             var totalPrice = (stockPrice * numSharesToSell);
 
