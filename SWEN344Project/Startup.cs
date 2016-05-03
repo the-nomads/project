@@ -19,7 +19,19 @@ namespace SWEN344Project
     {
         public void Configuration(IAppBuilder app)
         {
-            Database.SetInitializer<CaveWallContext>(new DropCreateDatabaseIfModelChanges<CaveWallContext>());
+
+            bool dropWholeDatabase = false;
+#if DEBUG
+            dropWholeDatabase = true;
+#endif
+            if (dropWholeDatabase)
+            {
+                Database.SetInitializer<CaveWallContext>(new DropCreateDatabaseAlways<CaveWallContext>());
+            }
+            else
+            {
+                Database.SetInitializer<CaveWallContext>(new DropCreateDatabaseIfModelChanges<CaveWallContext>());
+            }
 
             var config = new HttpConfiguration();
 

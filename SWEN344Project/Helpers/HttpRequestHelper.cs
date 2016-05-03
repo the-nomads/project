@@ -24,8 +24,18 @@ namespace SWEN344Project.Helpers
             reader.Close();
             response.Close();
 
-            var instantiation = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseFromServer);
-            return instantiation;
+            try
+            {
+                var instantiation = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseFromServer);
+                return instantiation;
+            }
+            catch (Exception exc)
+            {
+                var excString = "Could not deserialize response from server.\r\n";
+                excString += "Request: " + requestUrl + "\r\n";
+                excString += "Response: " + responseFromServer + "\r\n";
+                throw new Exception(excString, exc);
+            }
         }
     }
 }

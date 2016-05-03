@@ -27,7 +27,7 @@ namespace SWEN344Project.Models.TransientModels
         public string Symbol { get; set; }
     }
 
-    public class YahooFinanceStockQuoteResponse
+    public class YahooFinanceStockQuoteResponseMultiple
     {
         public Query query { get; set; }
 
@@ -41,6 +41,21 @@ namespace SWEN344Project.Models.TransientModels
                 public List<StockQuote> quote { get; set; }
             }
         }
-        
+    }
+
+    public class YahooFinanceStockQuoteResponseSingle
+    {
+        public Query query { get; set; }
+
+        public class Query
+        {
+            public int count { get; set; }
+            public Results results { get; set; }
+
+            public class Results
+            {
+                public StockQuote quote { get; set; }
+            }
+        }
     }
 }

@@ -48,6 +48,21 @@
                             <li>Exception: User not logged in</li>
                         </ul>
                     </li>
+                    <li>
+                        Purchase Or Sell Stock
+                        <ul>
+                            <li>Method: POST</li>
+                            <li>Resource: users/financialtransactions</li>
+                            <li>ID: none</li>
+                            <li>
+                                Data To Post: { NumSharesBoughtOrSold: [int], FinancialTransactionDirection: ["IN"/"OUT"], StockName: [String] },
+                                <br />Note that IN is used to SELL a stock.
+                                <br />Note that OUT is used to BUY a stock.
+                            </li>
+                            <li>Returns: nothing</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li>

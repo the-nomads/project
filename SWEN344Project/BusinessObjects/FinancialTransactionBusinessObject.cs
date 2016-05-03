@@ -121,7 +121,7 @@ namespace SWEN344Project.BusinessInterfaces
 
             // Load up the price of the stock
             var stockQuote = this._sibo.GetStockQuote(stockName);
-            var stockPrice = stockQuote.Ask; // Ask is the asking price of the stock, what you sell it for
+            var stockPrice = stockQuote.Ask; // Bid is the Bidding price of the stock, what you sell it for
 
             var totalPrice = (stockPrice * numSharesToSell);
 
@@ -145,7 +145,7 @@ namespace SWEN344Project.BusinessInterfaces
         public Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToBuy)
         {
             var stockQuote = this._sibo.GetStockQuote(stockName);
-            var stockPrice = stockQuote.Bid; // Bid is the bididng price of the stock, what you purchase it for
+            var stockPrice = stockQuote.Ask; // Ask is the Asking price of the stock, what you purchase it for
 
             var totalPrice = (stockPrice * numSharesToBuy);
 

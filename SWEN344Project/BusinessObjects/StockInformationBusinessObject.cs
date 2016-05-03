@@ -25,14 +25,27 @@ namespace SWEN344Project.BusinessInterfaces
 
         public List<StockQuote> GetStockQuotes(List<string> StockSymbols)
         {
+            if (StockSymbols == null || StockSymbols.Count == 0)
+            {
+                return new List<StockQuote>();
+            }
+
             var symbolsFormatted = StockSymbols.Select(x => "\"" + x + "\"").ToList();
             var yqlQuery = "select * from yahoo.finance.quotes where symbol in (" + string.Join(",", symbolsFormatted) + ")";
 
             var requestUrl = this.BaseAPIUrl + "?q=" + Uri.EscapeDataString(yqlQuery);
             requestUrl += "&format=json&env=http://datatables.org/alltables.env";
 
-            var quotes = new HttpRequestHelper().PerformRequest<YahooFinanceStockQuoteResponse>(requestUrl);
-            return quotes.query.results.quote;
+            if (StockSymbols.Count > 1)
+            {
+                var quotes = new HttpRequestHelper().PerformRequest<YahooFinanceStockQuoteResponseMultiple>(requestUrl);
+                return quotes.query.results.quote;
+            }
+            else
+            {
+                var quotes = new HttpRequestHelper().PerformRequest<YahooFinanceStockQuoteResponseSingle>(requestUrl);
+                return new List<StockQuote> { quotes.query.results.quote };
+            }
         }
 
     }

@@ -47,7 +47,6 @@ namespace SWEN344Project.Controllers
             }
         }
 
-
         [HttpPost]
         [Route("")]
         public async Task<HttpResponseMessage> PurchaseOrSellStock()
@@ -71,6 +70,10 @@ namespace SWEN344Project.Controllers
                 else if (toCreate.NumSharesBoughtOrSold < 1)
                 {
                     return this.CreateResponse(HttpStatusCode.BadRequest, "NumSharesBoughtOrSold must be greater than 0");
+                }
+                else if (string.IsNullOrEmpty(toCreate.StockName))
+                {
+                    return this.CreateResponse(HttpStatusCode.BadRequest, "StockName is required");
                 }
                 else if (toCreate.FinancialTransactionDirection == Constants.FinancialTransactionDirection.IN)
                 {
