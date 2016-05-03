@@ -109,85 +109,106 @@ namespace SWEN344Project.BusinessInterfaces
             return ft;
         }
 
+        private static Dictionary<int, object> cacheLocks = new Dictionary<int, object>();
+        private object GetCacheLock(int UserID)
+        {
+            object l;
+            if (!cacheLocks.TryGetValue(UserID, out l))
+            {
+                lock (cacheLocks)
+                {
+                    cacheLocks.Add(UserID, new object());
+                    cacheLocks.TryGetValue(UserID, out l);
+                }
+            }
+            return l;
+        }
+
         public Constants.ReturnValues.StockTransactionResult SellStock(User user, string stockName, int numSharesToSell)
         {
-            // Load the stock record containing how many stocks the user has
-            // If they have none, then return InsufficientStocks
-            var userStock = this.GetUserStock(user, stockName);
-            if (userStock == null || userStock.NumberOfStocks < numSharesToSell)
+            lock (GetCacheLock(user.UserID))
             {
-                return Constants.ReturnValues.StockTransactionResult.InsufficientStocks;
+                // Load the stock record containing how many stocks the user has
+                // If they have none, then return InsufficientStocks
+                var userStock = this.GetUserStock(user, stockName);
+                if (userStock == null || userStock.NumberOfStocks < numSharesToSell)
+                {
+                    return Constants.ReturnValues.StockTransactionResult.InsufficientStocks;
+                }
+
+                // Load up the price of the stock
+                var stockQuote = this._sibo.GetStockQuote(stockName);
+                var stockPrice = stockQuote.Bid; // Bid is the Bidding price of the stock, what you sell it for
+
+                var totalPrice = (stockPrice * numSharesToSell);
+
+                // Make a new transaction for the sale
+                this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockSale, stockName, numSharesToSell);
+
+                // Update the user's finance to have the amount they just sold
+                var uf = this.GetUserFinance(user, Constants.Currency.USD);
+                uf.Amount += totalPrice;
+                this._pbo.SaveChanges();
+
+                // Update the user's stock to now have the number of shares and total values
+                userStock.NumberOfStocks -= numSharesToSell;
+                userStock.TotalNumberOfStocksSold += numSharesToSell;
+                userStock.TotalValueOfStocksSold += totalPrice;
+                this._pbo.SaveChanges();
+
+                return Constants.ReturnValues.StockTransactionResult.Success;
             }
-
-            // Load up the price of the stock
-            var stockQuote = this._sibo.GetStockQuote(stockName);
-            var stockPrice = stockQuote.Bid; // Bid is the Bidding price of the stock, what you sell it for
-
-            var totalPrice = (stockPrice * numSharesToSell);
-
-            // Make a new transaction for the sale
-            this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockSale, stockName, numSharesToSell);
-
-            // Update the user's finance to have the amount they just sold
-            var uf = this.GetUserFinance(user, Constants.Currency.USD);
-            uf.Amount += totalPrice;
-            this._pbo.SaveChanges();
-
-            // Update the user's stock to now have the number of shares and total values
-            userStock.NumberOfStocks -= numSharesToSell;
-            userStock.TotalNumberOfStocksSold += numSharesToSell;
-            userStock.TotalValueOfStocksSold += totalPrice;
-            this._pbo.SaveChanges();
-
-            return Constants.ReturnValues.StockTransactionResult.Success;
         }
 
         public Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToBuy)
         {
-            var stockQuote = this._sibo.GetStockQuote(stockName);
-            var stockPrice = stockQuote.Ask; // Ask is the Asking price of the stock, what you purchase it for
-
-            var totalPrice = (stockPrice * numSharesToBuy);
-
-            // Load up the user's finance. If they don't have enough money, return Insufficient Funds
-            var uf = this.GetUserFinance(user, Constants.Currency.USD);
-            if (uf.Amount < totalPrice)
+            lock (GetCacheLock(user.UserID))
             {
-                return Constants.ReturnValues.StockTransactionResult.InsufficientFunds;
+                var stockQuote = this._sibo.GetStockQuote(stockName);
+                var stockPrice = stockQuote.Ask; // Ask is the Asking price of the stock, what you purchase it for
+
+                var totalPrice = (stockPrice * numSharesToBuy);
+
+                // Load up the user's finance. If they don't have enough money, return Insufficient Funds
+                var uf = this.GetUserFinance(user, Constants.Currency.USD);
+                if (uf.Amount < totalPrice)
+                {
+                    return Constants.ReturnValues.StockTransactionResult.InsufficientFunds;
+                }
+
+                // Make a new transaction for the purchase
+                this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockPurchase, stockName, numSharesToBuy);
+
+                // Update the user's finance to remove the money they just used
+                uf.Amount -= totalPrice;
+                this._pbo.SaveChanges();
+
+                // Load the stock record containing how many stocks the user has
+                // If they have none, it means they have not dealt with this stock before
+                var userStock = this.GetUserStock(user, stockName);
+                if (userStock == null)
+                {
+                    // Create the record for this stock and add it to the table
+                    userStock = new UserStock();
+                    userStock.StockName = stockName;
+                    userStock.NumberOfStocks = 0;
+                    userStock.TotalNumberOfStocksBought = 0;
+                    userStock.TotalNumberOfStocksSold = 0;
+                    userStock.TotalValueOfStocksBought = 0;
+                    userStock.TotalValueOfStocksSold = 0;
+                    userStock.UserID = user.UserID;
+                    this._pbo.UserStocks.AddEntity(userStock);
+                }
+
+                // Update the user's stock to now have the number of shares and total values
+                userStock.TotalNumberOfStocksBought += numSharesToBuy;
+                userStock.TotalValueOfStocksBought += totalPrice;
+                userStock.NumberOfStocks += numSharesToBuy;
+
+                this._pbo.SaveChanges();
+
+                return Constants.ReturnValues.StockTransactionResult.Success;
             }
-
-            // Make a new transaction for the purchase
-            this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockPurchase, stockName, numSharesToBuy);
-
-            // Update the user's finance to remove the money they just used
-            uf.Amount -= totalPrice;
-            this._pbo.SaveChanges();
-
-            // Load the stock record containing how many stocks the user has
-            // If they have none, it means they have not dealt with this stock before
-            var userStock = this.GetUserStock(user, stockName);
-            if (userStock == null)
-            {
-                // Create the record for this stock and add it to the table
-                userStock = new UserStock();
-                userStock.StockName = stockName;
-                userStock.NumberOfStocks = 0;
-                userStock.TotalNumberOfStocksBought = 0;
-                userStock.TotalNumberOfStocksSold = 0;
-                userStock.TotalValueOfStocksBought = 0;
-                userStock.TotalValueOfStocksSold = 0;
-                userStock.UserID = user.UserID;
-                this._pbo.UserStocks.AddEntity(userStock);
-            }
-
-            // Update the user's stock to now have the number of shares and total values
-            userStock.TotalNumberOfStocksBought += numSharesToBuy;
-            userStock.TotalValueOfStocksBought += totalPrice;
-            userStock.NumberOfStocks += numSharesToBuy;
-
-            this._pbo.SaveChanges();
-
-            return Constants.ReturnValues.StockTransactionResult.Success;
         }
     }
 }
