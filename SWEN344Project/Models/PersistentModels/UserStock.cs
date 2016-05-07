@@ -22,5 +22,8 @@ namespace SWEN344Project.Models.PersistentModels
         public int TotalNumberOfStocksBought { get; set; }
         public decimal TotalValueOfStocksSold { get; set; }
         public decimal TotalValueOfStocksBought { get; set; }
+
+        public string UserNote { get; set; }
+        public DateTime? UserNoteSet { get; set; }
     }
 }

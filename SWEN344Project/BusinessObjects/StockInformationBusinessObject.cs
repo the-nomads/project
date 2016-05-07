@@ -20,7 +20,12 @@ namespace SWEN344Project.BusinessInterfaces
         public StockQuote GetStockQuote(string StockSymbol)
         {
             var quotes = this.GetStockQuotes(new List<string> { StockSymbol });
-            return quotes.First();
+            var quote = quotes.First();
+            if (quote.Ask == null && quote.Bid == null && quote.Name == null) {
+                return null;
+            }
+
+            return quote;
         }
 
         public List<StockQuote> GetStockQuotes(List<string> StockSymbols)
@@ -47,6 +52,5 @@ namespace SWEN344Project.BusinessInterfaces
                 return new List<StockQuote> { quotes.query.results.quote };
             }
         }
-
     }
 }

@@ -17,12 +17,23 @@ namespace SWEN344Project.Helpers
     {
         public T PerformRequest<T>(string requestUrl)
         {
-            var request = WebRequest.Create(requestUrl);
-            var response = request.GetResponse();
-            var reader = new StreamReader(response.GetResponseStream());
-            string responseFromServer = reader.ReadToEnd();
-            reader.Close();
-            response.Close();
+            string responseFromServer;
+            try
+            {
+                var request = WebRequest.Create(requestUrl);
+                var response = request.GetResponse();
+                var reader = new StreamReader(response.GetResponseStream());
+                responseFromServer = reader.ReadToEnd();
+                reader.Close();
+                response.Close();
+            }
+            catch (Exception exc)
+            {
+                var excString = "Could not load response from server.\r\n";
+                excString += "Request: " + requestUrl + "\r\n";
+                throw new Exception(excString, exc);
+            }
+
 
             try
             {

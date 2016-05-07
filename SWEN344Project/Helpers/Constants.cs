@@ -19,7 +19,8 @@ namespace SWEN344Project.Helpers
             {
                 Success,
                 InsufficientFunds,
-                InsufficientStocks
+                InsufficientStocks,
+                StockNotFound
             }
         }
 

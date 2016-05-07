@@ -41,8 +41,19 @@
                         Get All Current User's Transaction
                         <ul>
                             <li>Method: GET</li>
+                            <li>Resource: users/financialtransactions/all</li>
+                            <li>ID: all</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: List of FinancialTransaction objects</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Delete All Current User's Transaction
+                        <ul>
+                            <li>Method: DELETE</li>
                             <li>Resource: users/financialtransactions</li>
-                            <li>ID: none</li>
+                            <li>ID: all</li>
                             <li>Data To Post: none</li>
                             <li>Returns: List of FinancialTransaction objects</li>
                             <li>Exception: User not logged in</li>
@@ -58,6 +69,51 @@
                                 Data To Post: { NumSharesBoughtOrSold: [int], FinancialTransactionDirection: ["IN"/"OUT"], StockName: [String] },
                                 <br />Note that IN is used to SELL a stock.
                                 <br />Note that OUT is used to BUY a stock.
+                            </li>
+                            <li>Returns: nothing</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Stocks
+                <ul>
+                    <li>
+                        Get All Current User's Stocks owned - now or in the past
+                        <br /> Also contains the stocks notes
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: stocks/owned</li>
+                            <li>ID: none</li>
+                            <li>Data To Post: none</li>
+                            <li>Returns: List of UserStock objects</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Update Stock Note
+                        <ul>
+                            <li>Method: PUT</li>
+                            <li>Resource: stocks/notes</li>
+                            <li>ID: none</li>
+                            <li>
+                                Data To Post: { StockName: [String], NoteToPost: [String], },
+                            </li>
+                            <li>Returns: nothing</li>
+                            <li>Exception: User not logged in</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Get Stock Info
+                        <ul>
+                            <li>Method: GET</li>
+                            <li>Resource: v</li>
+                            <li>
+                                ID: {stock name}
+                            </li>
+                            <li>
+                                Data To Post: none
                             </li>
                             <li>Returns: nothing</li>
                             <li>Exception: User not logged in</li>

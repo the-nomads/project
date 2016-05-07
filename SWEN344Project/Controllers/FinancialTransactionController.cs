@@ -47,6 +47,27 @@ namespace SWEN344Project.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("all")]
+        public async Task<HttpResponseMessage> DeleteAllTransactions()
+        {
+            try
+            {
+                var user = this.GetCurrentUser();
+                if (user == null)
+                {
+                    return this.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+
+                this._ftbo.DeleteTransactionsForUser(user);
+                return this.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception exc)
+            {
+                return this.CreateErrorResponse(exc);
+            }
+        }
+
         [HttpPost]
         [Route("")]
         public async Task<HttpResponseMessage> PurchaseOrSellStock()

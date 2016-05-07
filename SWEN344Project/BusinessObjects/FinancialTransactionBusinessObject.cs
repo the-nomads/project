@@ -62,6 +62,24 @@ namespace SWEN344Project.BusinessInterfaces
             return userStock;
         }
 
+        public UserStock AddNoteToUserStock(User user, string stockName, string note)
+        {
+            lock (GetCacheLock(user.UserID))
+            {
+                var userStock = this._pbo.UserStocks.All.FirstOrDefault(x => x.UserID == user.UserID && x.StockName == stockName);
+                if (userStock == null)
+                {
+                    // Create the record for this stock and add it to the table
+                    userStock = getBlankUserStock(stockName, user);
+                    this._pbo.UserStocks.AddEntity(userStock);
+                }
+                userStock.UserNote = note;
+                userStock.UserNoteSet = DateTime.Now;
+                this._pbo.SaveChanges();
+                return userStock;
+            }
+        }
+
         private FinancialTransaction CreateAndSaveFinancialTransaction(
             User user,
             decimal amount,
@@ -138,7 +156,12 @@ namespace SWEN344Project.BusinessInterfaces
 
                 // Load up the price of the stock
                 var stockQuote = this._sibo.GetStockQuote(stockName);
-                var stockPrice = stockQuote.Bid; // Bid is the Bidding price of the stock, what you sell it for
+                if (stockQuote == null)
+                {
+                    return Constants.ReturnValues.StockTransactionResult.StockNotFound;
+                }
+
+                var stockPrice = stockQuote.Bid.Value; // Bid is the Bidding price of the stock, what you sell it for
 
                 var totalPrice = (stockPrice * numSharesToSell);
 
@@ -165,9 +188,13 @@ namespace SWEN344Project.BusinessInterfaces
             lock (GetCacheLock(user.UserID))
             {
                 var stockQuote = this._sibo.GetStockQuote(stockName);
+                if (stockQuote == null)
+                {
+                    return Constants.ReturnValues.StockTransactionResult.StockNotFound;
+                }
                 var stockPrice = stockQuote.Ask; // Ask is the Asking price of the stock, what you purchase it for
 
-                var totalPrice = (stockPrice * numSharesToBuy);
+                var totalPrice = (stockPrice.Value * numSharesToBuy);
 
                 // Load up the user's finance. If they don't have enough money, return Insufficient Funds
                 var uf = this.GetUserFinance(user, Constants.Currency.USD);
@@ -189,14 +216,7 @@ namespace SWEN344Project.BusinessInterfaces
                 if (userStock == null)
                 {
                     // Create the record for this stock and add it to the table
-                    userStock = new UserStock();
-                    userStock.StockName = stockName;
-                    userStock.NumberOfStocks = 0;
-                    userStock.TotalNumberOfStocksBought = 0;
-                    userStock.TotalNumberOfStocksSold = 0;
-                    userStock.TotalValueOfStocksBought = 0;
-                    userStock.TotalValueOfStocksSold = 0;
-                    userStock.UserID = user.UserID;
+                    userStock = getBlankUserStock(stockName, user);
                     this._pbo.UserStocks.AddEntity(userStock);
                 }
 
@@ -208,6 +228,33 @@ namespace SWEN344Project.BusinessInterfaces
                 this._pbo.SaveChanges();
 
                 return Constants.ReturnValues.StockTransactionResult.Success;
+            }
+        }
+
+        private UserStock getBlankUserStock(string stockName, User user)
+        {
+            var userStock = new UserStock();
+            userStock.StockName = stockName;
+            userStock.NumberOfStocks = 0;
+            userStock.TotalNumberOfStocksBought = 0;
+            userStock.TotalNumberOfStocksSold = 0;
+            userStock.TotalValueOfStocksBought = 0;
+            userStock.TotalValueOfStocksSold = 0;
+            userStock.UserID = user.UserID;
+
+            return userStock;
+        }
+
+        public void DeleteTransactionsForUser(User user)
+        {
+            lock (GetCacheLock(user.UserID))
+            {
+                var transactions = this.GetTransactionsForUser(user);
+                foreach (var t in transactions)
+                {
+                    this._pbo.FinancialTransactions.DeleteEntity(t);
+                    this._pbo.SaveChanges();
+                }
             }
         }
     }

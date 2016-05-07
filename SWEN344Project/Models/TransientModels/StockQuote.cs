@@ -9,9 +9,9 @@ namespace SWEN344Project.Models.TransientModels
 {
     public class StockQuote
     {
-        public decimal Ask { get; set; }
-        public decimal Bid { get; set; }
-        public decimal BookValue { get; set; }
+        public decimal? Ask { get; set; }
+        public decimal? Bid { get; set; }
+        public decimal? BookValue { get; set; }
         public string Change { get; set; }
         public string ChangeFromFiftydayMovingAverage { get; set; }
         public string ChangeFromTwoHundreddayMovingAverage { get; set; }
@@ -19,8 +19,8 @@ namespace SWEN344Project.Models.TransientModels
         public string ChangeFromYearLow { get; set; }
         public string Change_PercentChange { get; set; }
         public string ChangeinPercent { get; set; }
-        public decimal DaysHigh { get; set; }
-        public decimal DaysLow { get; set; }
+        public decimal? DaysHigh { get; set; }
+        public decimal? DaysLow { get; set; }
         public string DaysRange { get; set; }
 
         public string Name { get; set; }

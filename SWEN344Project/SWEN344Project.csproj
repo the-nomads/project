@@ -236,6 +236,7 @@
     <Compile Include="BusinessObjects\EventBusinessObject.cs" />
     <Compile Include="BusinessObjects\FinancialTransactionBusinessObject.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Models\PersistentModels\FinancialTransaction.cs" />
     <Compile Include="Models\PersistentModels\Event.cs" />
     <Compile Include="Models\PersistentModels\User.cs" />
+    <Compile Include="Models\TransientModels\StockNote.cs" />
     <Compile Include="Models\TransientModels\StockQuote.cs" />
     <Compile Include="Models\TransientModels\CurrentWeatherModel.cs" />
     <Compile Include="Models\TransientModels\WeatherForecastModel.cs" />

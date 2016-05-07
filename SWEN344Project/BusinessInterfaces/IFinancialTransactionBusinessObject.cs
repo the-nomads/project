@@ -53,7 +53,7 @@ namespace SWEN344Project.BusinessInterfaces
         Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToSell);
 
         /// <summary>
-        /// Gets all the stocks a user has
+        /// Gets all the stocks a user has or ever has had
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -67,5 +67,22 @@ namespace SWEN344Project.BusinessInterfaces
         /// <param name="StockName"></param>
         /// <returns></returns>
         UserStock GetUserStock(User user, string StockName);
+
+
+        /// <summary>
+        /// Adds a note to a user stock
+        /// <para>If the user hasn't owned this stock before, creates a record with 0 stocks owned.</para>
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="stockName"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        UserStock AddNoteToUserStock(User user, string stockName, string note);
+
+        /// <summary>
+        /// Deletes all transactions for a user
+        /// </summary>
+        /// <param name="user"></param>
+        void DeleteTransactionsForUser(User user);
     }
 }
