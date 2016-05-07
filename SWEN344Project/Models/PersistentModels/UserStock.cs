@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEN344Project.Models.TransientModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,5 +26,8 @@ namespace SWEN344Project.Models.PersistentModels
 
         public string UserNote { get; set; }
         public DateTime? UserNoteSet { get; set; }
+
+        [NotMapped]
+        public StockQuote Quote { get; set; }
     }
 }

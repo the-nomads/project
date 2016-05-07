@@ -52,12 +52,25 @@ namespace SWEN344Project.BusinessInterfaces
         {
             var userStocks = this._pbo.UserStocks.All.Where(x => x.UserID == user.UserID).ToList();
 
+            foreach (var userStock in userStocks)
+            {
+                var stockQuote = this._sibo.GetStockQuote(userStock.StockName);
+                userStock.Quote = stockQuote;
+            } 
+
             return userStocks;
         }
 
         public UserStock GetUserStock(User user, string StockName)
         {
             var userStock = this._pbo.UserStocks.All.FirstOrDefault(x => x.UserID == user.UserID && x.StockName == StockName);
+            
+            if (userStock == null)
+            {
+                return null;
+            }
+            var stockQuote = this._sibo.GetStockQuote(userStock.StockName);
+            userStock.Quote = stockQuote;
 
             return userStock;
         }
