@@ -29,6 +29,11 @@ namespace SWEN344Project.Controllers
             }
         }
 
+        protected HttpResponseMessage CreateOKResponse(HttpStatusCode code, object data = null)
+        {
+            return this.CreateResponse(code, data);
+        }
+
         protected HttpResponseMessage CreateOKResponse(object data = null)
         {
             return this.CreateResponse(HttpStatusCode.OK, data);

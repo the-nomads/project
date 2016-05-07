@@ -120,6 +120,7 @@ namespace SWEN344Project.BusinessInterfaces
             }
 
             ft.FinancialTransactionDirection = direction;
+            ft.Currency = Constants.Currency.USD;
 
             this._pbo.FinancialTransactions.AddEntity(ft);
             this._pbo.SaveChanges();
@@ -142,7 +143,7 @@ namespace SWEN344Project.BusinessInterfaces
             return l;
         }
 
-        public Constants.ReturnValues.StockTransactionResult SellStock(User user, string stockName, int numSharesToSell)
+        public Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> SellStock(User user, string stockName, int numSharesToSell)
         {
             lock (GetCacheLock(user.UserID))
             {
@@ -151,14 +152,14 @@ namespace SWEN344Project.BusinessInterfaces
                 var userStock = this.GetUserStock(user, stockName);
                 if (userStock == null || userStock.NumberOfStocks < numSharesToSell)
                 {
-                    return Constants.ReturnValues.StockTransactionResult.InsufficientStocks;
+                    return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.InsufficientStocks, null);
                 }
 
                 // Load up the price of the stock
                 var stockQuote = this._sibo.GetStockQuote(stockName);
                 if (stockQuote == null)
                 {
-                    return Constants.ReturnValues.StockTransactionResult.StockNotFound;
+                    return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.StockNotFound, null);
                 }
 
                 var stockPrice = stockQuote.Bid.Value; // Bid is the Bidding price of the stock, what you sell it for
@@ -166,7 +167,7 @@ namespace SWEN344Project.BusinessInterfaces
                 var totalPrice = (stockPrice * numSharesToSell);
 
                 // Make a new transaction for the sale
-                this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockSale, stockName, numSharesToSell);
+                var transaction = this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockSale, stockName, numSharesToSell);
 
                 // Update the user's finance to have the amount they just sold
                 var uf = this.GetUserFinance(user, Constants.Currency.USD);
@@ -179,18 +180,18 @@ namespace SWEN344Project.BusinessInterfaces
                 userStock.TotalValueOfStocksSold += totalPrice;
                 this._pbo.SaveChanges();
 
-                return Constants.ReturnValues.StockTransactionResult.Success;
+                return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.Success, transaction);
             }
         }
 
-        public Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToBuy)
+        public Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> BuyStock(User user, string stockName, int numSharesToBuy)
         {
             lock (GetCacheLock(user.UserID))
             {
                 var stockQuote = this._sibo.GetStockQuote(stockName);
                 if (stockQuote == null)
                 {
-                    return Constants.ReturnValues.StockTransactionResult.StockNotFound;
+                    return new Tuple<Constants.ReturnValues.StockTransactionResult,FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.StockNotFound, null);
                 }
                 var stockPrice = stockQuote.Ask; // Ask is the Asking price of the stock, what you purchase it for
 
@@ -200,11 +201,11 @@ namespace SWEN344Project.BusinessInterfaces
                 var uf = this.GetUserFinance(user, Constants.Currency.USD);
                 if (uf.Amount < totalPrice)
                 {
-                    return Constants.ReturnValues.StockTransactionResult.InsufficientFunds;
+                    return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.InsufficientFunds, null);
                 }
 
                 // Make a new transaction for the purchase
-                this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockPurchase, stockName, numSharesToBuy);
+                var transaction = this.CreateAndSaveFinancialTransaction(user, totalPrice, Constants.FinancialTransactionType.StockPurchase, stockName, numSharesToBuy);
 
                 // Update the user's finance to remove the money they just used
                 uf.Amount -= totalPrice;
@@ -227,7 +228,7 @@ namespace SWEN344Project.BusinessInterfaces
 
                 this._pbo.SaveChanges();
 
-                return Constants.ReturnValues.StockTransactionResult.Success;
+                return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.Success, transaction);
             }
         }
 

@@ -41,7 +41,7 @@ namespace SWEN344Project.BusinessInterfaces
         /// <param name="stockName"></param>
         /// <param name="numSharesToSell"></param>
         /// <returns></returns>
-        Constants.ReturnValues.StockTransactionResult SellStock(User user, string stockName, int numSharesToSell);
+        Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> SellStock(User user, string stockName, int numSharesToBuy);
 
         /// <summary>
         /// 
@@ -50,7 +50,7 @@ namespace SWEN344Project.BusinessInterfaces
         /// <param name="stockName"></param>
         /// <param name="numSharesToSell"></param>
         /// <returns></returns>
-        Constants.ReturnValues.StockTransactionResult BuyStock(User user, string stockName, int numSharesToSell);
+        Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> BuyStock(User user, string stockName, int numSharesToBuy);
 
         /// <summary>
         /// Gets all the stocks a user has or ever has had

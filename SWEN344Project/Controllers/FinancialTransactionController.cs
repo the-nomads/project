@@ -82,7 +82,7 @@ namespace SWEN344Project.Controllers
 
                 var str = await Request.Content.ReadAsStringAsync();
                 var toCreate = JsonConvert.DeserializeObject<FinancialTransaction>(str);
-                Constants.ReturnValues.StockTransactionResult message;
+                Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> message;
 
                 if (!toCreate.NumSharesBoughtOrSold.HasValue)
                 {
@@ -111,13 +111,13 @@ namespace SWEN344Project.Controllers
                     return this.CreateResponse(HttpStatusCode.BadRequest, "FinancialTransactionDirection is required");
                 }
 
-                if (message == Constants.ReturnValues.StockTransactionResult.Success)
+                if (message.Item1 == Constants.ReturnValues.StockTransactionResult.Success)
                 {
-                    return this.CreateOKResponse(HttpStatusCode.Created);
+                    return this.CreateOKResponse(HttpStatusCode.Created, message.Item2);
                 }
                 else
                 {
-                    return this.CreateResponse(HttpStatusCode.InternalServerError, message.ToString());
+                    return this.CreateResponse(HttpStatusCode.InternalServerError, message.Item1.ToString());
                 }
             }
             catch (Exception exc)
