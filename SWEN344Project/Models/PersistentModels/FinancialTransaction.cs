@@ -13,7 +13,7 @@ namespace SWEN344Project.Models.PersistentModels
         public int FinancialTransactionID { get; set; }
 
         public int UserID { get; set; }
-        public User User { get; set; }
+
 
         public decimal Amount { get; set; }
         public string Currency { get; set; }

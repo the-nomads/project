@@ -4,6 +4,7 @@ using SWEN344Project.Helpers;
 using SWEN344Project.Models;
 using SWEN344Project.Models.PersistentModels;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -15,6 +16,8 @@ namespace SWEN344Project.Controllers
     [RoutePrefix("financialtransactions")]
     public class BaseAPIController : ApiController
     {
+        protected IUserBusinessObject ubo;
+
         protected HttpResponseMessage CreateResponse(HttpStatusCode code, object data = null)
         {
             if (data != null)
@@ -96,25 +99,47 @@ namespace SWEN344Project.Controllers
             }
         }
 
+
+        private static Dictionary<string, string> useridcache = new Dictionary<string, string>();
         private string GetCurrentUserID()
         {
             string token = HttpContext.Current.Request.Headers.Get("accessToken");
-            var requestUrl = Constants.ExternalAPIs.Facebook.GetUserRequestUrl(token);
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return null;
+            }
 
-            var userobj = new HttpRequestHelper().PerformRequest<FacebookUserInfo>(requestUrl);
-            
-            return userobj.id;
+
+            string id;
+            if (!useridcache.TryGetValue(token, out id))
+            {
+                var requestUrl = Constants.ExternalAPIs.Facebook.GetUserRequestUrl(token);
+
+                var userobj = new HttpRequestHelper().PerformRequest<FacebookUserInfo>(requestUrl);
+                if (userobj == null || userobj.id == null)
+                {
+                    return null;
+                }
+                id = userobj.id;
+
+                lock (useridcache)
+                {
+                    if (!useridcache.ContainsKey(token))
+                        useridcache.Add(token, id);
+                }
+            }
+            return id;
         }
 
         protected User GetCurrentUser()
         {
-            using (var s = Startup.container.BeginLifetimeScope())
+            var uid = this.GetCurrentUserID();
+            if (string.IsNullOrWhiteSpace(uid))
             {
-                var ubo = Startup.container.Resolve<IUserBusinessObject>();
-                var uid = this.GetCurrentUserID();
-                var user = ubo.GetOrCreateUser(uid);
-                return user;
+                return null;
             }
+            var user = ubo.GetOrCreateUser(uid);
+            return user;
         }
 
         private class FacebookUserInfo

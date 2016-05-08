@@ -11,8 +11,8 @@ namespace SWEN344Project.Models.PersistentModels
         [Key]
         public int UserID { get; set; }
         public string FacebookID { get; set; }
-        public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
-        public virtual ICollection<UserFinance> UserFinances { get; set; } 
+        //public virtual ICollection<Event> Events { get; set; }
+        //public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        //public virtual ICollection<UserFinance> UserFinances { get; set; } 
     }
 }

@@ -14,7 +14,7 @@ namespace SWEN344Project.Models.PersistentModels
         public int EventID { get; set; }
 
         public int UserID { get; set; }
-        public User User { get; set; }
+
 
         public string EventName { get; set; }
         public bool EventIsAllDay { get; set; }

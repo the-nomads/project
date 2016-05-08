@@ -20,15 +20,17 @@ namespace SWEN344Project.Controllers
     {
         private readonly IEventBusinessObject _ebo;
         public EventController(
-            IEventBusinessObject ebo
+            IEventBusinessObject ebo,
+            IUserBusinessObject ubo
             )
         {
             this._ebo = ebo;
+            base.ubo = ubo;
         }
 
         [HttpGet]
         [Route("all")]
-        public async Task<HttpResponseMessage> GetUserEvents()
+        public HttpResponseMessage GetUserEvents()
         {
             try
             {
@@ -49,7 +51,7 @@ namespace SWEN344Project.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<HttpResponseMessage> CreateNewEvent()
+        public HttpResponseMessage CreateNewEvent()
         {
             try
             {
@@ -59,7 +61,7 @@ namespace SWEN344Project.Controllers
                     return this.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                var str = await Request.Content.ReadAsStringAsync();
+                var str = Request.Content.ReadAsStringAsync().Result;
                 var toCreate = JsonConvert.DeserializeObject<Event>(str);
                 this._ebo.CreateNewEvent(user, toCreate);
                 return this.CreateOKResponse(HttpStatusCode.Created);
@@ -72,7 +74,7 @@ namespace SWEN344Project.Controllers
 
         [HttpPut]
         [Route("{eventid}")]
-        public async Task<HttpResponseMessage> UpdateEvent(int eventid)
+        public HttpResponseMessage UpdateEvent(int eventid)
         {
             try
             {
@@ -82,7 +84,7 @@ namespace SWEN344Project.Controllers
                     return this.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                var str = await Request.Content.ReadAsStringAsync();
+                var str = Request.Content.ReadAsStringAsync().Result;
                 var toUpdate = JsonConvert.DeserializeObject<Event>(str);
 
                 var e = this._ebo.GetEvent(eventid);
@@ -106,7 +108,7 @@ namespace SWEN344Project.Controllers
 
         [HttpDelete]
         [Route("{eventid}")]
-        public async Task<HttpResponseMessage> DeleteEvent(int eventid)
+        public HttpResponseMessage DeleteEvent(int eventid)
         {
             try
             {

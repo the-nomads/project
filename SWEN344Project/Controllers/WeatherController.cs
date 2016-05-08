@@ -17,10 +17,12 @@ namespace SWEN344Project.Controllers
     {
         private readonly IWeatherBusinessObject _wbo;
         public WeatherController(
-            IWeatherBusinessObject wbo
+            IWeatherBusinessObject wbo,
+            IUserBusinessObject ubo
             )
         {
             this._wbo = wbo;
+            base.ubo = ubo;
         }
 
 

@@ -23,16 +23,18 @@ namespace SWEN344Project.Controllers
         private readonly IStockInformationBusinessObject _sibo;
         public StockController(
             IFinancialTransactionBusinessObject ftbo,
-            IStockInformationBusinessObject sibo
+            IStockInformationBusinessObject sibo,
+            IUserBusinessObject ubo
             )
         {
             this._ftbo = ftbo;
             this._sibo = sibo;
+            base.ubo = ubo;
         }
 
         [HttpGet]
         [Route("{stockname}")]
-        public async Task<HttpResponseMessage> GetStockInfo(string stockName)
+        public HttpResponseMessage GetStockInfo(string stockName)
         {
             try
             {
@@ -57,7 +59,7 @@ namespace SWEN344Project.Controllers
 
         [HttpGet]
         [Route("owned")]
-        public async Task<HttpResponseMessage> GetUserStocks()
+        public HttpResponseMessage GetUserStocks()
         {
             try
             {
@@ -78,7 +80,7 @@ namespace SWEN344Project.Controllers
 
         [HttpPut]
         [Route("notes")]
-        public async Task<HttpResponseMessage> WriteUserStockNote()
+        public HttpResponseMessage WriteUserStockNote()
         {
             try
             {
@@ -88,7 +90,7 @@ namespace SWEN344Project.Controllers
                     return this.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                var str = await Request.Content.ReadAsStringAsync();
+                var str = Request.Content.ReadAsStringAsync().Result;
                 var toCreate = JsonConvert.DeserializeObject<StockNote>(str);
 
                 this._ftbo.AddNoteToUserStock(user, toCreate.StockName, toCreate.NoteToPost);
@@ -101,6 +103,9 @@ namespace SWEN344Project.Controllers
         }
 
         [HttpOptions]
+        [Route("{stockname}")]
+        [Route("notes")]
+        [Route("owned")]
         [Route("all")]
         [Route("")]
         public HttpResponseMessage Options()

@@ -14,7 +14,8 @@ namespace SWEN344Project.Models.PersistentModels
         public int UserStockID { get; set; }
 
         public int UserID { get; set; }
-        public User User { get; set; }
+
+
 
         public int NumberOfStocks { get; set; }
         public string StockName { get; set; }

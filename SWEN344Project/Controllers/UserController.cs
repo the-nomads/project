@@ -18,15 +18,17 @@ namespace SWEN344Project.Controllers
     {
         private readonly IFinancialTransactionBusinessObject _ftbo;
         public UserController(
-            IFinancialTransactionBusinessObject fbo
+            IFinancialTransactionBusinessObject fbo,
+            IUserBusinessObject ubo
             )
         {
             this._ftbo = fbo;
+            base.ubo = ubo;
         }
 
         [HttpGet]
         [Route("balance")]
-        public async Task<HttpResponseMessage> GetUserBalance()
+        public HttpResponseMessage GetUserBalance()
         {
             try
             {

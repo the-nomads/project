@@ -43,22 +43,22 @@ namespace SWEN344Project
             //register dependencies
             builder.RegisterType<FinancialTransactionBusinessObject>()
                             .As<IFinancialTransactionBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
             builder.RegisterType<EventBusinessObject>()
                             .As<IEventBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
             builder.RegisterType<UserBusinessObject>()
                             .As<IUserBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
             builder.RegisterType<WeatherBusinessObject>()
                             .As<IWeatherBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
             builder.RegisterType<StockInformationBusinessObject>()
                             .As<IStockInformationBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
             builder.RegisterType<PersistenceBusinessObject>()
                             .As<IPersistenceBusinessObject>()
-                            .InstancePerLifetimeScope();
+                            .InstancePerRequest();
 
 
             var assembly = typeof(SWEN344Project.Controllers.FinancialTransactionController).Assembly;
@@ -72,11 +72,7 @@ namespace SWEN344Project
 
             app.UseWebApi(config);
             //app.MapSignalR();
-
-            container = c;
         }
-
-        public static IContainer container;
 
         private void RegisterDependencies(HttpConfiguration config)
         {

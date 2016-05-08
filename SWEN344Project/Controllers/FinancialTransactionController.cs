@@ -20,15 +20,17 @@ namespace SWEN344Project.Controllers
     {
         private readonly IFinancialTransactionBusinessObject _ftbo;
         public FinancialTransactionController(
-            IFinancialTransactionBusinessObject ftbo
+            IFinancialTransactionBusinessObject ftbo,
+            IUserBusinessObject ubo
             )
         {
             this._ftbo = ftbo;
+            base.ubo = ubo;
         }
 
         [HttpGet]
         [Route("all")]
-        public async Task<HttpResponseMessage> GetAllTransactions()
+        public HttpResponseMessage GetAllTransactions()
         {
             try
             {
@@ -49,7 +51,7 @@ namespace SWEN344Project.Controllers
 
         [HttpDelete]
         [Route("all")]
-        public async Task<HttpResponseMessage> DeleteAllTransactions()
+        public HttpResponseMessage DeleteAllTransactions()
         {
             try
             {
@@ -70,7 +72,7 @@ namespace SWEN344Project.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<HttpResponseMessage> PurchaseOrSellStock()
+        public HttpResponseMessage PurchaseOrSellStock()
         {
             try
             {
@@ -80,7 +82,7 @@ namespace SWEN344Project.Controllers
                     return this.CreateResponse(HttpStatusCode.Unauthorized);
                 }
 
-                var str = await Request.Content.ReadAsStringAsync();
+                var str = Request.Content.ReadAsStringAsync().Result;
                 var toCreate = JsonConvert.DeserializeObject<FinancialTransaction>(str);
                 Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction> message;
 
