@@ -41,6 +41,10 @@ namespace SWEN344Project.Controllers
                 }
 
                 var events = this._ebo.GetEventsForUser(user);
+                if (events != null)
+                {
+                    events = events.OrderBy(x => x.EventStartDate).ToList();
+                }
                 return this.CreateOKResponse(events);
             }
             catch (Exception exc)
