@@ -49,6 +49,7 @@ namespace SWEN344Project.BusinessInterfaces
             {
                 e.IsDeleted = true;
             }
+            this._pbo.SaveChanges();
         }
     }
 }

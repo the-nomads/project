@@ -78,7 +78,7 @@ namespace SWEN344Project.Controllers
 
         [HttpPut]
         [Route("{eventid}")]
-        public HttpResponseMessage UpdateEvent(int eventid)
+        public HttpResponseMessage UpdateEvent([FromUri]int eventid)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace SWEN344Project.Controllers
 
         [HttpDelete]
         [Route("{eventid}")]
-        public HttpResponseMessage DeleteEvent(int eventid)
+        public HttpResponseMessage DeleteEvent([FromUri]int eventid)
         {
             try
             {
