@@ -92,7 +92,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\TestPersistenceObject.cs" />
+    <Compile Include="Helpers\TestUserData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\WeatherTests.cs" />
+    <Compile Include="UnitTests\UserTests.cs" />
+    <Compile Include="UnitTests\StockTests.cs" />
+    <Compile Include="UnitTests\FinancialTests.cs" />
+    <Compile Include="UnitTests\EventTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

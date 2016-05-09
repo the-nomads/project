@@ -8,19 +8,39 @@ using System.Threading.Tasks;
 
 namespace SWEN344Project.BusinessInterfaces
 {
-    public class PersistenceBusinessObject : IPersistenceBusinessObject, IDisposable
+    public class TestPersistenceObject : IPersistenceBusinessObject, IDisposable
     {
-        public PersistenceBusinessObject()
+        public TestPersistenceObject()
         {
-            this._ctx = new CaveWallContext();
-            this.FinancialTransactions = new DataSet<FinancialTransaction>(this._ctx.FinancialTransactions);
-            this.Users = new DataSet<User>(this._ctx.Users);
-            this.Events = new DataSet<Event>(this._ctx.Events);
-            this.UserFinances = new DataSet<UserFinance>(this._ctx.UserFinances);
-            this.UserStocks = new DataSet<UserStock>(this._ctx.UserStocks);
+            this.FinancialTransactions = new TestDataSet<FinancialTransaction>();
+            this.Users = new TestDataSet<User>();
+            this.Events = new TestDataSet<Event>();
+            this.UserFinances = new TestDataSet<UserFinance>();
+            this.UserStocks = new TestDataSet<UserStock>();
         }
 
-        private CaveWallContext _ctx;
+        private class TestDataSet<T> : IDataSet<T> where T : class
+        {
+            public TestDataSet()
+            {
+                this.backing = new List<T>();
+            }
+
+            public IQueryable<T> All { get { return this.backing.AsQueryable(); } }
+
+            public void DeleteEntity(T toDelete)
+            {
+                this.backing.Remove(toDelete);
+            }
+
+            public void AddEntity(T toAdd)
+            {
+                this.backing.Add(toAdd);
+            }
+
+            private List<T> backing;
+        }
+
         public IQueryable<Event> ValidEvents { get { return this.Events.All.Where(x => x.IsDeleted == false); } }
 
         public IDataSet<FinancialTransaction> FinancialTransactions { get; private set; }
@@ -31,7 +51,7 @@ namespace SWEN344Project.BusinessInterfaces
 
         public void SaveChanges()
         {
-            this._ctx.SaveChanges();
+
         }
 
         public void Dispose()
@@ -44,7 +64,6 @@ namespace SWEN344Project.BusinessInterfaces
         {
             if (disposing)
             {
-                this._ctx.Dispose();
             }
 
         }

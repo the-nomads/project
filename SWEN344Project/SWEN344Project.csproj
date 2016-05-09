@@ -248,6 +248,7 @@
     </Compile>
     <Compile Include="Helpers\HttpRequestHelper.cs" />
     <Compile Include="Hubs\MessageHub.cs" />
+    <Compile Include="Models\PersistentModels\IDataSet.cs" />
     <Compile Include="Models\PersistentModels\DataSet.cs" />
     <Compile Include="Models\PersistentModels\CaveWallContext.cs" />
     <Compile Include="Models\PersistentModels\UserStock.cs" />

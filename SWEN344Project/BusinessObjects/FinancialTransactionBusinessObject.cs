@@ -160,19 +160,20 @@ namespace SWEN344Project.BusinessInterfaces
         {
             lock (GetCacheLock(user.UserID))
             {
-                // Load the stock record containing how many stocks the user has
-                // If they have none, then return InsufficientStocks
-                var userStock = this.GetUserStock(user, stockName);
-                if (userStock == null || userStock.NumberOfStocks < numSharesToSell)
-                {
-                    return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.InsufficientStocks, null);
-                }
 
                 // Load up the price of the stock
                 var stockQuote = this._sibo.GetStockQuote(stockName);
                 if (stockQuote == null)
                 {
                     return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.StockNotFound, null);
+                }
+
+                // Load the stock record containing how many stocks the user has
+                // If they have none, then return InsufficientStocks
+                var userStock = this.GetUserStock(user, stockName);
+                if (userStock == null || userStock.NumberOfStocks < numSharesToSell)
+                {
+                    return new Tuple<Constants.ReturnValues.StockTransactionResult, FinancialTransaction>(Constants.ReturnValues.StockTransactionResult.InsufficientStocks, null);
                 }
 
                 var stockPrice = stockQuote.Bid.Value; // Bid is the Bidding price of the stock, what you sell it for

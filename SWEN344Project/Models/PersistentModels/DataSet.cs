@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SWEN344Project.Models.PersistentModels
 {
-    public class DataSet<T> where T : class
+    public class DataSet<T> : IDataSet<T> where T : class
     {
         public DataSet(DbSet<T> backingSource)
         {

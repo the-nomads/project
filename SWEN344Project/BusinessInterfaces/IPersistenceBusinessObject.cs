@@ -12,11 +12,11 @@ namespace SWEN344Project.BusinessInterfaces
     {
         IQueryable<Event> ValidEvents { get; }
 
-        DataSet<User> Users { get; }
-        DataSet<FinancialTransaction> FinancialTransactions { get; }
-        DataSet<Event> Events { get; }
-        DataSet<UserFinance> UserFinances { get; }
-        DataSet<UserStock> UserStocks { get; }
+        IDataSet<User> Users { get; }
+        IDataSet<FinancialTransaction> FinancialTransactions { get; }
+        IDataSet<Event> Events { get; }
+        IDataSet<UserFinance> UserFinances { get; }
+        IDataSet<UserStock> UserStocks { get; }
 
         void SaveChanges();
     }

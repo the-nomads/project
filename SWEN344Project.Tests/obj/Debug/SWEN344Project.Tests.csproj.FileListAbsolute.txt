@@ -38,3 +38,5 @@ C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project.Tests\obj\Debug\SWEN344Project.Tests.csprojResolveAssemblyReference.cache
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project.Tests\obj\Debug\SWEN344Project.Tests.dll
 C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project.Tests\obj\Debug\SWEN344Project.Tests.pdb
+C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\ian\Desktop\School\Web Engineering\Team Project\Project\project\SWEN344Project.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.xml

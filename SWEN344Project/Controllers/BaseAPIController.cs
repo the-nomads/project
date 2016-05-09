@@ -28,7 +28,7 @@ namespace SWEN344Project.Controllers
             }
             else
             {
-                return Request.CreateResponse(code);
+                return Request.CreateResponse(code, "null");
             }
         }
 

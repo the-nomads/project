@@ -20,8 +20,12 @@ namespace SWEN344Project.BusinessInterfaces
         public StockQuote GetStockQuote(string StockSymbol)
         {
             var quotes = this.GetStockQuotes(new List<string> { StockSymbol });
-            var quote = quotes.First();
-            if (quote.Ask == null && quote.Bid == null && quote.Name == null) {
+            if (quotes == null)
+            {
+                return null;
+            }
+            var quote = quotes.FirstOrDefault();
+            if (quote == null || quote.Ask == null && quote.Bid == null && quote.Name == null) {
                 return null;
             }
 
@@ -44,11 +48,19 @@ namespace SWEN344Project.BusinessInterfaces
             if (StockSymbols.Count > 1)
             {
                 var quotes = new HttpRequestHelper().PerformRequest<YahooFinanceStockQuoteResponseMultiple>(requestUrl);
+                if (quotes == null || quotes.query == null || quotes.query.results == null)
+                {
+                    return null;
+                }
                 return quotes.query.results.quote;
             }
             else
             {
                 var quotes = new HttpRequestHelper().PerformRequest<YahooFinanceStockQuoteResponseSingle>(requestUrl);
+                if (quotes == null || quotes.query == null || quotes.query.results == null || quotes.query.results.quote == null)
+                {
+                    return null;
+                }
                 return new List<StockQuote> { quotes.query.results.quote };
             }
         }

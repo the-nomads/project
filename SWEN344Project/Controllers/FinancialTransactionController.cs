@@ -62,7 +62,7 @@ namespace SWEN344Project.Controllers
                 }
 
                 this._ftbo.DeleteTransactionsForUser(user);
-                return this.CreateResponse(HttpStatusCode.OK);
+                return this.CreateOKResponse();
             }
             catch (Exception exc)
             {
